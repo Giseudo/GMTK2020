@@ -6,6 +6,7 @@ using UnityEngine;
 [ExecuteAlways]
 public class Bowl : MonoBehaviour {
     public BowlData data;
+    [NonSerialized] public Cat feedingCat;
     Material material;
 
     public void OnEnable () => BowlManager.bowls.Add(this);
@@ -14,14 +15,16 @@ public class Bowl : MonoBehaviour {
     public float FoodAmount => data.foodAmount.RuntimeValue;
 
     public void Start () {
-        material = GetComponentInChildren<MeshRenderer>().sharedMaterial;
+        material = GetComponentInChildren<MeshRenderer>().material;
     }
 
     public void Eat(float speed) {
-        data.foodAmount.RuntimeValue -= Time.deltaTime * speed;
-
-        if (data.foodAmount.RuntimeValue < 0f)
+        if (data.foodAmount.RuntimeValue < 0f) {
             data.foodAmount.RuntimeValue = 0f;
+            return;
+        }
+
+        data.foodAmount.RuntimeValue -= Time.deltaTime * speed;
 
         float amount = Mathf.InverseLerp(0f, data.foodAmount.InitialValue, data.foodAmount.RuntimeValue);
 

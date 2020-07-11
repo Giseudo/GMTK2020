@@ -22,6 +22,6 @@ public class IdlingState : State {
         elapsedTime += Time.deltaTime;
 
         if (elapsedTime >= 2f)
-            stateMachine.ChangeState(cat.walking);
+            cat.LookForFood();
     }
 }

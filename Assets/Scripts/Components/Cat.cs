@@ -8,14 +8,15 @@ using UnityEngine.AI;
 public class Cat : MonoBehaviour {
     public CatData data;
     [NonSerialized] public NavMeshAgent agent;
-    StateMachine behaviorSM;
+    public StateMachine behaviorSM;
     public IdlingState idling;
     public WalkingState walking;
     public ChasingState chasing;
     public EatingMealState eatingMeal;
     public EatingSnackState eatingSnack;
     public PlayingState playing;
-    Bowl ClosestBowl => BowlManager.GetClosestBowl(transform.position);
+    Bowl ClosestBowl => BowlManager.GetClosestBowl(transform.position, IsThief);
+    bool IsThief => data.type == CatType.Thief;
 
     void OnEnable() => CatManager.cats.Add(this);
     void OnDisable() => CatManager.cats.Remove(this);
@@ -49,10 +50,18 @@ public class Cat : MonoBehaviour {
     }
 
     public void LookForFood () {
+        // Is the cat already eating?
+        if (behaviorSM.CurrentState == eatingMeal) return;
+
         Bowl bowl = ClosestBowl;
 
-        if (ClosestBowl == null) return;
+        // No meal left? Meh...
+        if (bowl == null) {
+            behaviorSM.ChangeState(walking);
+            return;
+        }
 
+        // Take that bowl!
         chasing.target = bowl.transform;
         behaviorSM.ChangeState(chasing);
     }
@@ -64,6 +73,11 @@ public class Cat : MonoBehaviour {
             switch (hit.gameObject.name) {
                 case "Bowl":
                     eatingMeal.bowl = hit.GetComponent<Bowl>();
+
+                    // Is there any cat eating it? Is it a thief?
+                    if (eatingMeal.bowl.feedingCat != null && !IsThief) return;
+
+                    // Yummy! >:3
                     if (eatingMeal.bowl.FoodAmount > 0f)
                         behaviorSM.ChangeState(eatingMeal);
                     break;

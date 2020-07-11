@@ -15,15 +15,18 @@ public class BowlManager : MonoBehaviour {
             bowl.data.foodAmount = Instantiate(bowl.data.foodAmount);
         }
     }
-    public static Bowl GetClosestBowl(Vector3 position) {
-        float previous = 0f;
+    public static Bowl GetClosestBowl(Vector3 position, bool thief = false) {
         Bowl closest = null;
+        float previous = 0f;
 
         foreach (Bowl bowl in bowls) {
             float distance = (bowl.transform.position - position).magnitude;
 
-            if (bowl.data.foodAmount.RuntimeValue == 0f) continue;
-
+            // Has no food on it
+            if (bowl.FoodAmount <= 0f) continue;
+            // Is a cat eating it?
+            if (bowl.feedingCat != null && !thief) continue;
+            // Found one
             if (previous == 0f || previous > distance) {
                 previous = distance;
                 closest = bowl;
