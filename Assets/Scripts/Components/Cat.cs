@@ -23,6 +23,9 @@ public class Cat : MonoBehaviour {
     void OnEnable() => CatManager.cats.Add(this);
     void OnDisable() => CatManager.cats.Remove(this);
 
+    public delegate void OnSwallow(Cat cat, float amount);
+    public OnSwallow onSwallow;
+
     public void Initialize () {
         agent = GetComponent<NavMeshAgent>();
         behaviorSM = new StateMachine();
@@ -83,6 +86,13 @@ public class Cat : MonoBehaviour {
         if (bowl.FoodAmount <= 0f) valid = false;
 
         return valid;
+    }
+
+    public void Swallow (float amount) {
+        if (onSwallow != null)
+            onSwallow(this, amount);
+
+        data.hunger.RuntimeValue -= amount;
     }
 
     void Search () {

@@ -24,10 +24,10 @@ public class Bowl : MonoBehaviour {
         GetComponentInChildren<MeshRenderer>().material = material;
     }
 
-    public void Eat(float speed) {
+    public float Feed(float speed) {
         if (data.foodAmount.RuntimeValue < 0f) {
             data.foodAmount.RuntimeValue = 0f;
-            return;
+            return 0f;
         }
 
         data.foodAmount.RuntimeValue -= Time.deltaTime * speed;
@@ -35,5 +35,7 @@ public class Bowl : MonoBehaviour {
         float amount = Mathf.InverseLerp(0f, data.foodAmount.InitialValue, data.foodAmount.RuntimeValue);
 
         material.SetFloat("_Amount", amount);
+
+        return amount;
     }
 }

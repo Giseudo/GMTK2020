@@ -28,7 +28,9 @@ public class EatingMealState : State {
         if (bowl.feedingCat != cat)
             stateMachine.ChangeState(cat.walking);
 
-        bowl.Eat(cat.data.eatSpeed);
+        float amount = bowl.Feed(cat.data.eatSpeed);
+
+        cat.Swallow(amount);
 
         if (bowl.FoodAmount <= 0f) // TODO Am I still hungry?
             stateMachine.ChangeState(cat.walking);
