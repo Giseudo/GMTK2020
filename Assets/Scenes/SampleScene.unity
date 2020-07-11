@@ -687,6 +687,11 @@ PrefabInstance:
       propertyPath: goal
       value: 
       objectReference: {fileID: 1939742369}
+    - target: {fileID: 5999552978380316643, guid: 72ad25aeb2dee7f4a95560d852732f78,
+        type: 3}
+      propertyPath: bowl
+      value: 
+      objectReference: {fileID: 1939742369}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72ad25aeb2dee7f4a95560d852732f78, type: 3}
 --- !u!1001 &5027896525096986229

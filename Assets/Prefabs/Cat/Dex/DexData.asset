@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 714173c9c78534b4daff963c7a3b7933, type: 3}
   m_Name: DexData
   m_EditorClassIdentifier: 
+  hunger: {fileID: 11400000, guid: 9c06825f8a7f16343a14f972943d15e5, type: 2}
   nick: Dex
   mealDuration: 20
   type: 0

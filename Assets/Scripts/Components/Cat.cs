@@ -27,6 +27,10 @@ public class Cat : MonoBehaviour {
         behaviorSM.Initialize(idling);
     }
 
+    public void Eat () {
+        behaviorSM.ChangeState(eating);
+    }
+
     void Update () {
         behaviorSM.CurrentState.LogicUpdate();
     }
