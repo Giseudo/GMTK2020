@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[ExecuteAlways]
 public class Cat : MonoBehaviour {
     public CatData data;
-    public Transform bowl;
     [NonSerialized] public NavMeshAgent agent;
     StateMachine behaviorSM = new StateMachine();
     IdlingState idling;
@@ -15,12 +15,15 @@ public class Cat : MonoBehaviour {
     ChasingState chasing;
     PlayingState playing;
 
-    void Start () {
+    void OnEnable() => CatManager.cats.Add(this);
+    void OnDisable() => CatManager.cats.Remove(this);
+
+    void Awake () {
         agent = GetComponent<NavMeshAgent>();
 
         idling = new IdlingState (this, behaviorSM);
         walking = new WalkingState (this, behaviorSM);
-        eating = new EatingState (this, behaviorSM, bowl);
+        eating = new EatingState (this, behaviorSM);
         chasing = new ChasingState (this, behaviorSM);
         playing = new PlayingState (this, behaviorSM);
 
@@ -32,10 +35,14 @@ public class Cat : MonoBehaviour {
     }
 
     void Update () {
+        if (behaviorSM.CurrentState is null) return;
+
         behaviorSM.CurrentState.LogicUpdate();
     }
 
     void FixedUpdate() {
+        if (behaviorSM.CurrentState is null) return;
+
         behaviorSM.CurrentState.PhysicsUpdate();
     }
 }
