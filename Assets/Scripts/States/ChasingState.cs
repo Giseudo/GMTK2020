@@ -11,6 +11,7 @@ public class ChasingState : State {
         base.LogicUpdate();
 
         Chase();
+        ReachTarget();
     }
 
     void Chase () {
@@ -18,5 +19,12 @@ public class ChasingState : State {
         position -= (position - cat.transform.position).normalized * .5f;
 
         cat.agent.destination = position;
+    }
+
+    void ReachTarget () {
+        float distance = (target.position - cat.transform.position).magnitude;
+
+        if (distance <= 1f)
+            stateMachine.ChangeState(cat.idling);
     }
 }

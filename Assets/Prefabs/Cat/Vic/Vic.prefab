@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 871330186378280652, guid: 1b039811226d8c648b2c57b7af3bae18,
         type: 3}
       propertyPath: m_Name
-      value: Mima
+      value: Vic
       objectReference: {fileID: 0}
     - target: {fileID: 871330186378280655, guid: 1b039811226d8c648b2c57b7af3bae18,
         type: 3}
@@ -36,7 +36,7 @@ PrefabInstance:
         type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 11400000, guid: fa35f74304832844386fc89f1f5daad3,
+      objectReference: {fileID: 11400000, guid: 6b9f4aa9346dfb249864c4f613bfe253,
         type: 2}
     - target: {fileID: 7480179652847808153, guid: 1b039811226d8c648b2c57b7af3bae18,
         type: 3}

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 714173c9c78534b4daff963c7a3b7933, type: 3}
   m_Name: Mima_Data
   m_EditorClassIdentifier: 
-  hunger: {fileID: 11400000, guid: 8c3d04877a242ef43aeacc1f2598e7b5, type: 2}
   nick: Mima
-  eatSpeed: 30
+  state: 
   type: 1
+  eatSpeed: 30
+  hunger: {fileID: 11400000, guid: 2502690993871f44dbf52cb1401cd2bc, type: 2}

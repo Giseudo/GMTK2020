@@ -21,7 +21,7 @@ public class IdlingState : State {
     public void Idle () {
         elapsedTime += Time.deltaTime;
 
-        if (elapsedTime >= 2f)
+        if (elapsedTime >= 1f)
             cat.LookForFood();
     }
 }
