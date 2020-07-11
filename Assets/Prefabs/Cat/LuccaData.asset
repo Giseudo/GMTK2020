@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 714173c9c78534b4daff963c7a3b7933, type: 3}
-  m_Name: DexData
+  m_Name: LuccaData
   m_EditorClassIdentifier: 
-  nick: Dex
-  mealDuration: 20
-  type: 0
+  nick: Kiki
+  mealDuration: 10
+  type: 1

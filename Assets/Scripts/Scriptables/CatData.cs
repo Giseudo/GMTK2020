@@ -4,8 +4,12 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "CatData", menuName = "Data/CatData", order = 1)]
 public class CatData : ScriptableObject {
-    public string name;
-    public bool thief;
-    public float eatTime;
-    public float hunger;
+    public enum CatType {
+        Fool,
+        Thief
+    };
+
+    public string nick;
+    public float mealDuration;
+    public CatType type;
 }
