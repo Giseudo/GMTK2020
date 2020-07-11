@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hunger: {fileID: 11400000, guid: 9c06825f8a7f16343a14f972943d15e5, type: 2}
   nick: Dex
-  eatSpeed: 1
+  eatSpeed: 20
   type: 0

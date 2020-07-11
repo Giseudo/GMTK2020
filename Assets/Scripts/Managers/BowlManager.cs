@@ -9,6 +9,24 @@ using UnityEditor;
 public class BowlManager : MonoBehaviour {
     public static List<Bowl> bowls = new List<Bowl>();
 
+    public static Bowl GetClosestBowl(Vector3 position) {
+        float previous = 0f;
+        Bowl closest = null;
+
+        foreach (Bowl bowl in bowls) {
+            float distance = (bowl.transform.position - position).magnitude;
+
+            if (bowl.data.foodAmount.RuntimeValue == 0f) continue;
+
+            if (previous == 0f || previous > distance) {
+                previous = distance;
+                closest = bowl;
+            }
+        }
+
+        return closest;
+    }
+
     #if UNITY_EDITOR
     void OnDrawGizmos() {
         foreach (Bowl bowl in bowls) {
@@ -29,20 +47,4 @@ public class BowlManager : MonoBehaviour {
         }
     }
     #endif
-
-    public static Bowl GetClosestBowl(Vector3 position) {
-        float previous = 0f;
-        Bowl closest = bowls[0];
-
-        foreach (Bowl bowl in bowls) {
-            float distance = (bowl.transform.position - position).magnitude;
-
-            if (previous == 0f || previous > distance) {
-                previous = distance;
-                closest = bowl;
-            }
-        }
-
-        return closest;
-    }
 }

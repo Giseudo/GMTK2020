@@ -48,8 +48,11 @@ public class Cat : MonoBehaviour {
     }
 
     public void LookForFood () {
-        chasing.target = ClosestBowl.transform;
+        Bowl bowl = ClosestBowl;
 
+        if (ClosestBowl == null) return;
+
+        chasing.target = bowl.transform;
         behaviorSM.ChangeState(chasing);
     }
 

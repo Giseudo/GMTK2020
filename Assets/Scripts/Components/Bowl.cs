@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,9 @@ public class Bowl : MonoBehaviour {
 
     public void Start () {
         material = GetComponentInChildren<MeshRenderer>().sharedMaterial;
+
+        data = Instantiate(data);
+        data.foodAmount = Instantiate(data.foodAmount);
     }
 
     public void Eat(float speed) {

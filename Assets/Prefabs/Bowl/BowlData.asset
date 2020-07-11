@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf53db6f89236d4cae39d1e8c6e2d3a, type: 3}
   m_Name: BowlData
   m_EditorClassIdentifier: 
+  foodAmount: {fileID: 11400000, guid: b920dd4b1ea6bef498dcdccf2b92e330, type: 2}
