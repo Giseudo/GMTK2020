@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 714173c9c78534b4daff963c7a3b7933, type: 3}
-  m_Name: KikiData
+  m_Name: LuccaData
   m_EditorClassIdentifier: 
-  nick: Kiki
-  mealDuration: 10
+  hunger: {fileID: 0}
+  nick: Lucca
+  eatSpeed: 0
   type: 1

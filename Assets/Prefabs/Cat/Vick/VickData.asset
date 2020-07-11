@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hunger: {fileID: 0}
   nick: Vick
-  mealDuration: 20
+  eatSpeed: 0
   type: 0

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hunger: {fileID: 0}
   nick: Mima
-  mealDuration: 10
+  eatSpeed: 0
   type: 1

@@ -11,6 +11,6 @@ public class CatData : ScriptableObject {
 
     public FloatVariable hunger;
     public string nick;
-    public float mealDuration;
+    public float eatSpeed;
     public CatType type;
 }
