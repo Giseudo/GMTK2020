@@ -9,6 +9,12 @@ using UnityEditor;
 public class CatManager : MonoBehaviour {
     public static List<Cat> cats = new List<Cat>();
 
+    public void FeedCats () {
+        foreach (Cat cat in cats) {
+            cat.LookForFood();
+        }
+   }
+
     #if UNITY_EDITOR
     void OnDrawGizmos() {
         foreach (Cat cat in cats) {

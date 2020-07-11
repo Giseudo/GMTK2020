@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 871330186378280652, guid: 1b039811226d8c648b2c57b7af3bae18,
         type: 3}
       propertyPath: m_Name
-      value: Dex
+      value: Kiki
       objectReference: {fileID: 0}
     - target: {fileID: 871330186378280655, guid: 1b039811226d8c648b2c57b7af3bae18,
         type: 3}
@@ -36,13 +36,13 @@ PrefabInstance:
         type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 11400000, guid: c95caf3a2469892409840ea66e33c141,
+      objectReference: {fileID: 11400000, guid: 90252a2e708a4ef46b4a803448b86fd2,
         type: 2}
     - target: {fileID: 7480179652847808153, guid: 1b039811226d8c648b2c57b7af3bae18,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d5c4bf2178d58df479eacc9dcbf9bb48, type: 2}
+      objectReference: {fileID: 2100000, guid: dcc30eb050c9424478845268f916403d, type: 2}
     - target: {fileID: 9003419719404877822, guid: 1b039811226d8c648b2c57b7af3bae18,
         type: 3}
       propertyPath: m_Speed

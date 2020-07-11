@@ -9,6 +9,12 @@ using UnityEditor;
 public class BowlManager : MonoBehaviour {
     public static List<Bowl> bowls = new List<Bowl>();
 
+    public void Start () {
+        foreach (Bowl bowl in bowls) {
+            bowl.data = Instantiate(bowl.data);
+            bowl.data.foodAmount = Instantiate(bowl.data.foodAmount);
+        }
+    }
     public static Bowl GetClosestBowl(Vector3 position) {
         float previous = 0f;
         Bowl closest = null;

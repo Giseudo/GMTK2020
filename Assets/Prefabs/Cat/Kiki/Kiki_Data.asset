@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d224425330316714f911883f3291f4a1, type: 3}
-  m_Name: DexHunger 1
+  m_Script: {fileID: 11500000, guid: 714173c9c78534b4daff963c7a3b7933, type: 3}
+  m_Name: KikiData
   m_EditorClassIdentifier: 
-  InitialValue: 100
+  hunger: {fileID: 11400000, guid: 8c3d04877a242ef43aeacc1f2598e7b5, type: 2}
+  nick: Kiki
+  eatSpeed: 50
+  type: 1

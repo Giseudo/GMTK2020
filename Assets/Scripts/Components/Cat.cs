@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class Cat : MonoBehaviour {
     public CatData data;
     [NonSerialized] public NavMeshAgent agent;
-    StateMachine behaviorSM = new StateMachine();
+    StateMachine behaviorSM;
     public IdlingState idling;
     public WalkingState walking;
     public ChasingState chasing;
@@ -22,6 +22,7 @@ public class Cat : MonoBehaviour {
 
     void Start () {
         agent = GetComponent<NavMeshAgent>();
+        behaviorSM = new StateMachine();
 
         idling = new IdlingState (this, behaviorSM);
         walking = new WalkingState (this, behaviorSM);
