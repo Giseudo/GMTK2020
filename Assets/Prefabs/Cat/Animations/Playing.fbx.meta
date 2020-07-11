@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: f2f6e347896874d4e8c3c680d351c1c3
+guid: 5935a4da5a0bf38489ae7ec623f198ce
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Cat_Eating
+    second: Cat_Playing
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,18 +35,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Cat_Eating
+      name: Cat_Playing
       takeName: Take 001
       internalID: 0
-      firstFrame: 5
-      lastFrame: 25
+      firstFrame: 131
+      lastFrame: 170
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
