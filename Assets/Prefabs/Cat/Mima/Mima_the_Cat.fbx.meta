@@ -6,7 +6,17 @@ ModelImporter:
   - first:
       74: 1827226128182048838
     second: Take 001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body_M
+    second: {fileID: 2100000, guid: aa0d19e5eaf8a9b44895e3eee72111bc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes_M
+    second: {fileID: 2100000, guid: 00ba9a8279f522a498191f787c490827, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
