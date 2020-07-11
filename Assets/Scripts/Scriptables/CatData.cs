@@ -9,6 +9,7 @@ public class CatData : ScriptableObject {
         Thief
     };
 
+    public FloatVariable hunger;
     public string nick;
     public float mealDuration;
     public CatType type;
