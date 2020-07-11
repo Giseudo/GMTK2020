@@ -23,12 +23,16 @@ public class BowlManager : MonoBehaviour {
         foreach (Bowl bowl in bowls) {
             float distance = (bowl.transform.position - position).magnitude;
 
-            // Has no food on it
+            /* Has no food on it
             if (bowl.FoodAmount <= 0f) continue;
             // Is a cat eating it?
             if (bowl.feedingCat != null && !cat.IsThief) continue;
             // Was I eating it just before?
             if (bowl == cat.previousBowl) continue;
+            */
+
+            if (!cat.CanEat(bowl)) continue;
+
             // Found one
             if (previous == 0f || previous > distance) {
                 previous = distance;

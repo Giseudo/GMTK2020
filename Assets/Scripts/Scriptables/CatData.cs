@@ -9,8 +9,9 @@ public enum CatType {
 
 [CreateAssetMenu(fileName = "CatData", menuName = "Data/CatData", order = 1)]
 public class CatData : ScriptableObject {
-    public FloatVariable hunger;
     public string nick;
-    public float eatSpeed;
+    public string state;
     public CatType type;
+    public float eatSpeed;
+    public FloatVariable hunger;
 }
