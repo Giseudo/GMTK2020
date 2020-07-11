@@ -7,4 +7,5 @@ public class CatData : ScriptableObject {
     public string name;
     public bool thief;
     public float eatTime;
+    public float hunger;
 }
