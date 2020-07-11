@@ -15,8 +15,9 @@ public class Cat : MonoBehaviour {
     public EatingMealState eatingMeal;
     public EatingSnackState eatingSnack;
     public PlayingState playing;
-    Bowl ClosestBowl => BowlManager.GetClosestBowl(transform.position, IsThief);
-    bool IsThief => data.type == CatType.Thief;
+    [NonSerialized] public Bowl previousBowl;
+    Bowl ClosestBowl => BowlManager.GetClosestBowl(this);
+    public bool IsThief => data.type == CatType.Thief;
 
     void OnEnable() => CatManager.cats.Add(this);
     void OnDisable() => CatManager.cats.Remove(this);
@@ -77,9 +78,14 @@ public class Cat : MonoBehaviour {
                     // Is there any cat eating it? Is it a thief?
                     if (eatingMeal.bowl.feedingCat != null && !IsThief) return;
 
+                    if (eatingMeal.bowl == previousBowl) continue;
+
+                    // There's no food
+                    if (eatingMeal.bowl.FoodAmount <= 0f) behaviorSM.ChangeState(walking);
+
                     // Yummy! >:3
-                    if (eatingMeal.bowl.FoodAmount > 0f)
-                        behaviorSM.ChangeState(eatingMeal);
+                    behaviorSM.ChangeState(eatingMeal);
+
                     break;
                 case "Snack":
                     behaviorSM.ChangeState(eatingSnack);

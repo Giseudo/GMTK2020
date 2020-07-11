@@ -15,7 +15,8 @@ public class BowlManager : MonoBehaviour {
             bowl.data.foodAmount = Instantiate(bowl.data.foodAmount);
         }
     }
-    public static Bowl GetClosestBowl(Vector3 position, bool thief = false) {
+    public static Bowl GetClosestBowl(Cat cat) {
+        Vector3 position = cat.transform.position;
         Bowl closest = null;
         float previous = 0f;
 
@@ -25,7 +26,9 @@ public class BowlManager : MonoBehaviour {
             // Has no food on it
             if (bowl.FoodAmount <= 0f) continue;
             // Is a cat eating it?
-            if (bowl.feedingCat != null && !thief) continue;
+            if (bowl.feedingCat != null && !cat.IsThief) continue;
+            // Was I eating it just before?
+            if (bowl == cat.previousBowl) continue;
             // Found one
             if (previous == 0f || previous > distance) {
                 previous = distance;

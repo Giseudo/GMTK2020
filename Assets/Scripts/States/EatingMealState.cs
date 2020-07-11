@@ -16,6 +16,8 @@ public class EatingMealState : State {
     public override void Exit(State nextState) {
         base.Exit(nextState);
 
+        cat.previousBowl = bowl;
+
         if (bowl.feedingCat == cat)
             bowl.feedingCat = null;
     }
