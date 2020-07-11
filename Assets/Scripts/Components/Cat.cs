@@ -85,13 +85,24 @@ public class Cat : MonoBehaviour {
 
                     // Yummy! >:3
                     behaviorSM.ChangeState(eatingMeal);
-
-                    break;
+                    return;
                 case "Snack":
                     behaviorSM.ChangeState(eatingSnack);
                     break;
                 case "YarnBall":
                     behaviorSM.ChangeState(playing);
+                    break;
+            }
+        }
+
+        colliders = Physics.OverlapSphere(transform.position, 2f);
+
+        foreach (var hit in colliders) {
+            switch (hit.gameObject.name) {
+                case "YarnBall":
+                case "Snack":
+                    chasing.target = hit.transform;
+                    behaviorSM.ChangeState(chasing);
                     break;
             }
         }

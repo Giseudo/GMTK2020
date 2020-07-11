@@ -11,10 +11,10 @@ public class BowlManager : MonoBehaviour {
 
     public void Start () {
         foreach (Bowl bowl in bowls) {
-            bowl.data = Instantiate(bowl.data);
-            bowl.data.foodAmount = Instantiate(bowl.data.foodAmount);
+            bowl.Initialize();
         }
     }
+
     public static Bowl GetClosestBowl(Cat cat) {
         Vector3 position = cat.transform.position;
         Bowl closest = null;
