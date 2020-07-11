@@ -4,20 +4,26 @@ using UnityEngine;
 
 [ExecuteAlways]
 public class Bowl : MonoBehaviour {
+    public BowlData data;
+    Material material;
+
     public void OnEnable () => BowlManager.bowls.Add(this);
     public void OnDisable () => BowlManager.bowls.Remove(this);
 
-    Material material;
+    public float FoodAmount => data.foodAmount.RuntimeValue;
 
     public void Start () {
         material = GetComponentInChildren<MeshRenderer>().sharedMaterial;
     }
 
     public void Eat(float speed) {
-        float amount = material.GetFloat("_Amount");
+        data.foodAmount.RuntimeValue -= Time.deltaTime * speed;
 
-        if (amount >= 0) {
-            material.SetFloat("_Amount", amount - Time.deltaTime * speed * .1f);
-        }
+        if (data.foodAmount.RuntimeValue < 0f)
+            data.foodAmount.RuntimeValue = 0f;
+
+        float amount = Mathf.InverseLerp(0f, data.foodAmount.InitialValue, data.foodAmount.RuntimeValue);
+
+        material.SetFloat("_Amount", amount);
     }
 }

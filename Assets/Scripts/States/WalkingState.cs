@@ -31,7 +31,7 @@ public class WalkingState : State {
             stateMachine.ChangeState(cat.idling);
     }
 
-    Vector3 RandomPosition(float distance = .5f) {
+    Vector3 RandomPosition(float distance = 1f) {
         Vector2 direction = Random.insideUnitCircle.normalized;
         Vector3 position = cat.transform.position + new Vector3(direction.x, 0f, direction.y) * distance;
 

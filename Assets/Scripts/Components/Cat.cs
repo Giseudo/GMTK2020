@@ -60,7 +60,8 @@ public class Cat : MonoBehaviour {
             switch (hit.gameObject.name) {
                 case "Bowl":
                     eatingMeal.bowl = hit.GetComponent<Bowl>();
-                    behaviorSM.ChangeState(eatingMeal);
+                    if (eatingMeal.bowl.FoodAmount > 0f)
+                        behaviorSM.ChangeState(eatingMeal);
                     break;
                 case "Snack":
                     behaviorSM.ChangeState(eatingSnack);

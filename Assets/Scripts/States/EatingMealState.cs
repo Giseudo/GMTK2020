@@ -15,5 +15,8 @@ public class EatingMealState : State {
         base.LogicUpdate();
 
         bowl.Eat(cat.data.eatSpeed);
+
+        if (bowl.FoodAmount <= 0f)
+            stateMachine.ChangeState(cat.walking);
     }
 }

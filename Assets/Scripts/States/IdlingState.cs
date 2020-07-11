@@ -21,7 +21,7 @@ public class IdlingState : State {
     public void Idle () {
         elapsedTime += Time.deltaTime;
 
-        if (elapsedTime >= 4f)
+        if (elapsedTime >= 2f)
             stateMachine.ChangeState(cat.walking);
     }
 }
