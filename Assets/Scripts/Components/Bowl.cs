@@ -14,8 +14,14 @@ public class Bowl : MonoBehaviour {
 
     public float FoodAmount => data.foodAmount.RuntimeValue;
 
-    public void Start () {
-        material = GetComponentInChildren<MeshRenderer>().material;
+    public void Initialize () {
+        // Clone data
+        data = Instantiate(data);
+        data.foodAmount = Instantiate(data.foodAmount);
+
+        // Clone material
+        material = Instantiate(GetComponentInChildren<MeshRenderer>().material);
+        GetComponentInChildren<MeshRenderer>().material = material;
     }
 
     public void Eat(float speed) {

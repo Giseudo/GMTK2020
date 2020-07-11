@@ -19,10 +19,11 @@ public class Cat : MonoBehaviour {
     Bowl ClosestBowl => BowlManager.GetClosestBowl(this);
     public bool IsThief => data.type == CatType.Thief;
 
+    State CurrentState => behaviorSM.CurrentState;
     void OnEnable() => CatManager.cats.Add(this);
     void OnDisable() => CatManager.cats.Remove(this);
 
-    void Start () {
+    public void Initialize () {
         agent = GetComponent<NavMeshAgent>();
         behaviorSM = new StateMachine();
 
@@ -38,6 +39,8 @@ public class Cat : MonoBehaviour {
 
     void Update () {
         if (!Application.IsPlaying(gameObject)) return;
+
+        data.state = CurrentState.ToString();
 
         behaviorSM.CurrentState.LogicUpdate();
 
@@ -67,24 +70,39 @@ public class Cat : MonoBehaviour {
         behaviorSM.ChangeState(chasing);
     }
 
+    public bool CanEat (Bowl bowl) {
+        bool valid = true;
+
+        // Is there any cat eating it? Am I a thief?
+        if (bowl.feedingCat != null && !IsThief) valid = false;
+
+        // I was there just before
+        if (bowl == previousBowl) valid = false;
+
+        // There's no food
+        if (bowl.FoodAmount <= 0f) valid = false;
+
+        return valid;
+    }
+
     void Search () {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
 
         foreach (var hit in colliders) {
             switch (hit.gameObject.name) {
                 case "Bowl":
-                    eatingMeal.bowl = hit.GetComponent<Bowl>();
+                    if (CurrentState == eatingMeal) return;
 
-                    // Is there any cat eating it? Is it a thief?
-                    if (eatingMeal.bowl.feedingCat != null && !IsThief) return;
+                    Bowl bowl = hit.GetComponent<Bowl>();
 
-                    if (eatingMeal.bowl == previousBowl) continue;
+                    if (CanEat(bowl)) {
+                        eatingMeal.bowl = bowl;
+                        behaviorSM.ChangeState(eatingMeal);
+                        break;
+                    }
 
-                    // There's no food
-                    if (eatingMeal.bowl.FoodAmount <= 0f) behaviorSM.ChangeState(walking);
-
-                    // Yummy! >:3
-                    behaviorSM.ChangeState(eatingMeal);
+                    if (CurrentState == chasing && chasing.target == bowl)
+                        behaviorSM.ChangeState(walking);
 
                     break;
                 case "Snack":
@@ -92,6 +110,18 @@ public class Cat : MonoBehaviour {
                     break;
                 case "YarnBall":
                     behaviorSM.ChangeState(playing);
+                    break;
+            }
+        }
+
+        colliders = Physics.OverlapSphere(transform.position, 2f);
+
+        foreach (var hit in colliders) {
+            switch (hit.gameObject.name) {
+                case "YarnBall":
+                case "Snack":
+                    chasing.target = hit.transform;
+                    behaviorSM.ChangeState(chasing);
                     break;
             }
         }
