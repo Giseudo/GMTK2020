@@ -24,14 +24,11 @@ public class Cat : MonoBehaviour {
     public float Hunger => Mathf.Round(data.hunger.RuntimeValue);
     State CurrentState => behaviorSM.CurrentState;
 
-    void OnEnable() => CatManager.cats.Add(this);
-    void OnDisable() => CatManager.cats.Remove(this);
+    void OnEnable() => CatManager.AddCat(this);
+    void OnDisable() => CatManager.RemoveCat(this);
 
     public delegate void OnHungerChange(Cat cat);
     public OnHungerChange onHungerChange;
-
-    public delegate void OnScare(Cat cat);
-    public OnScare onScare;
 
     public void Initialize () {
         agent = GetComponent<NavMeshAgent>();
@@ -45,7 +42,7 @@ public class Cat : MonoBehaviour {
         playing = new PlayingState (this, behaviorSM);
         frightening = new FrighteningState (this, behaviorSM);
 
-        behaviorSM.Initialize(walking);
+        behaviorSM.Initialize(idling);
     }
 
     void Update () {
@@ -65,6 +62,8 @@ public class Cat : MonoBehaviour {
 
     void UpdateState() {
         data.state = CurrentState.ToString();
+
+        if (!GameManager.Instance.IsPlaying) return;
 
         if (CurrentState != eatingMeal) {
             data.hunger.RuntimeValue += data.hungerSpeed * Time.deltaTime;
@@ -132,8 +131,6 @@ public class Cat : MonoBehaviour {
 
     public void Scare () {
         behaviorSM.ChangeState(frightening);
-
-        if (onScare != null) onScare(this);
     }
 
     void Search () {

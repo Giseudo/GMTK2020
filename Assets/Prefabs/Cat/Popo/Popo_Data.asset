@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 714173c9c78534b4daff963c7a3b7933, type: 3}
-  m_Name: VicData
+  m_Name: Popo_Data
   m_EditorClassIdentifier: 
-  nick: Vic
-  state: ChasingState
+  nick: Popo
+  state: EatingMealState
   type: 0
   walkSpeed: 2
-  eatSpeed: 5
+  eatSpeed: 10
   hungerSpeed: 2
-  hunger: {fileID: 11400000, guid: 3227d3c94f3cdbd44a85e86b714801a6, type: 2}
+  hunger: {fileID: 11400000, guid: b0acb033a65fd0a4ebc11807fd1b7884, type: 2}

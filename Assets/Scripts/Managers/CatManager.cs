@@ -11,35 +11,61 @@ public class CatManager : MonoBehaviour {
     public static List<Cat> cats = new List<Cat>();
     public delegate void OnAddCat(Cat cat);
     public static OnAddCat onAddCat;
-	public static CatManager Instance = null;
+    public delegate void OnRemoveCat(Cat cat);
+    public static OnRemoveCat onRemoveCat;
 
-	void Awake() {
-		if (Instance == null) {
-			Instance = this;
-		} else if (Instance != this) {
-			Destroy(gameObject);
-		}
+    public static void EnableCat(int amount = 1) {
+        int count = 0;
+        Transform parent = GameObject.Find("Cats").transform;
 
-		DontDestroyOnLoad (gameObject);
-	}
+        for (int i = 0; i < parent.transform.childCount; i++) {
+            if (count >= amount) return;
 
-    public void Start () {
-        foreach (Cat cat in cats) {
-            cat.Initialize();
-            cat.onScare += OnCatScare;
+            Transform child = parent.transform.GetChild(i);
+
+            if (child == null) return;
+
+            if (!child.gameObject.activeInHierarchy) {
+                child.gameObject.SetActive(true);
+                count++;
+            }
         }
     }
 
-    public void FeedCats () {
-        foreach (Cat cat in cats) {
-            cat.LookForFood();
+    public static void DisableBowl() {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Cat")) {
+            if (obj.activeInHierarchy) {
+                obj.SetActive(false);
+                return;
+            }
         }
     }
 
-    public void AddCat (Cat cat) {
+    public static void AddCat (Cat cat) {
+        cats.Add(cat);
+        // BowlManager.EnableBowl();
+
         if (onAddCat != null) onAddCat(cat);
 
-        cats.Add(cat);
+        cat.Initialize();
+    }
+
+    public static void RemoveCat (Cat cat) {
+        if (onRemoveCat != null) onRemoveCat(cat);
+
+        // BowlManager.DisableBowl();
+        cats.Remove(cat);
+    }
+
+    public static List<Cat> GetDeadCats () {
+        List<Cat> deadCats = new List<Cat>();
+
+        foreach (Cat cat in cats) {
+            if (cat.Hunger >= 200f)
+                deadCats.Add(cat);
+        }
+
+        return deadCats;
     }
 
     public static Vector3 RandomPosition(Vector3 origin, float distance = 1f) {
@@ -58,11 +84,7 @@ public class CatManager : MonoBehaviour {
         return navmeshHit.position;
     }
 
-    public void OnCatScare(Cat cat) {
-        SoundManager.Instance.Play("AngryCat");
-    }
-
-    #if UNITY_EDITOR
+    /*#if UNITY_EDITOR
     void OnDrawGizmos() {
         foreach (Cat cat in cats) {
             Vector3 managerPos = transform.position;
@@ -82,4 +104,5 @@ public class CatManager : MonoBehaviour {
         }
     }
     #endif
+    */
 }

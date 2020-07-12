@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
+    [ExecuteAlways]
 public class Bowl : MonoBehaviour {
     public BowlData data;
     [NonSerialized] public Cat feedingCat;
@@ -12,8 +12,8 @@ public class Bowl : MonoBehaviour {
     public float InitialMeal => data.foodAmount.InitialValue;
     public float RemainingMeal => data.foodAmount.RuntimeValue;
 
-    public void OnEnable () => BowlManager.bowls.Add(this);
-    public void OnDisable () => BowlManager.bowls.Remove(this);
+    public void OnEnable () => BowlManager.AddBowl(this);
+    public void OnDisable () => BowlManager.RemoveBowl(this);
 
     public float FoodAmount => data.foodAmount.RuntimeValue;
 
@@ -21,10 +21,12 @@ public class Bowl : MonoBehaviour {
         // Clone data
         data = Instantiate(data);
         data.foodAmount = Instantiate(data.foodAmount);
+        data.foodAmount.RuntimeValue = 0f;
 
         // Clone material
         material = Instantiate(GetComponentInChildren<MeshRenderer>().material);
         GetComponentInChildren<MeshRenderer>().material = material;
+        material.SetFloat("_Amount", 0f);
     }
 
     public float Feed(Cat cat) {
@@ -42,6 +44,11 @@ public class Bowl : MonoBehaviour {
         data.foodAmount.RuntimeValue = currentAmount;
 
         return previousAmount - currentAmount;
+    }
+
+    public void PlaceFood() {
+        data.foodAmount.RuntimeValue = data.foodAmount.InitialValue;
+        material.SetFloat("_Amount", 1f);
     }
 
     public void Feeding(Cat cat) {

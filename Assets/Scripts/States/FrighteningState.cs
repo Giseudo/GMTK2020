@@ -9,6 +9,7 @@ public class FrighteningState : State {
     public override void Enter (State previousState) {
         base.Enter(previousState);
         startTime = Time.unscaledTime;
+        SoundManager.Instance.Play("AngryCat");
 
         Flee(CatManager.RandomPosition(cat.transform.position, 5f));
     }

@@ -8,10 +8,57 @@ using UnityEditor;
 
 public class BowlManager : MonoBehaviour {
     public static List<Bowl> bowls = new List<Bowl>();
+    public delegate void OnAddBowl(Bowl bowl);
+    public static OnAddBowl onAddBowl;
+    public delegate void OnRemoveBowl(Bowl bowl);
+    public static OnRemoveBowl onRemoveBowl;
 
-    public void Start () {
+    public static void EnableBowl(int amount) {
+        int count = 0;
+        Transform parent = GameObject.Find("Bowls").transform;
+
+        for (int i = 0; i < parent.transform.childCount; i++) {
+            if (count >= amount) return;
+
+            Transform child = parent.transform.GetChild(i);
+
+            if (child == null) return;
+
+            if (!child.gameObject.activeInHierarchy) {
+                child.gameObject.SetActive(true);
+                count++;
+            }
+        }
+    }
+
+    public static void DisableBowl() {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Bowl")) {
+            if (obj.activeInHierarchy) {
+                obj.SetActive(false);
+                return;
+            }
+        }
+    }
+
+    public static void AddBowl (Bowl bowl) {
+        bowls.Add(bowl);
+
+        if (onAddBowl != null) onAddBowl(bowl);
+
+        if (!Application.IsPlaying(bowl.gameObject)) return;
+
+        bowl.Initialize();
+    }
+
+    public static void RemoveBowl (Bowl bowl) {
+        if (onRemoveBowl != null) onRemoveBowl(bowl);
+
+        bowls.Remove(bowl);
+    }
+
+    public static void PlaceFood () {
         foreach (Bowl bowl in bowls) {
-            bowl.Initialize();
+            bowl.PlaceFood();
         }
     }
 
@@ -54,7 +101,7 @@ public class BowlManager : MonoBehaviour {
         return closest;
     }
 
-    #if UNITY_EDITOR
+    /*#if UNITY_EDITOR
     void OnDrawGizmos() {
         foreach (Bowl bowl in bowls) {
             Vector3 managerPos = transform.position;
@@ -74,4 +121,5 @@ public class BowlManager : MonoBehaviour {
         }
     }
     #endif
+    */
 }

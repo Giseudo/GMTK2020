@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 714173c9c78534b4daff963c7a3b7933, type: 3}
-  m_Name: VicData
+  m_Name: Catalyna_Data
   m_EditorClassIdentifier: 
-  nick: Vic
-  state: ChasingState
+  nick: Catalyna
+  state: IdlingState
   type: 0
   walkSpeed: 2
-  eatSpeed: 5
+  eatSpeed: 20
   hungerSpeed: 2
-  hunger: {fileID: 11400000, guid: 3227d3c94f3cdbd44a85e86b714801a6, type: 2}
+  hunger: {fileID: 11400000, guid: 8846cb4b3cd0e1740b826faf732f5a56, type: 2}

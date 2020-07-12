@@ -79,7 +79,7 @@ public class ActionsUI : MonoBehaviour {
     }
 
     public void FeedCats() {
-        CatManager.Instance.FeedCats();
+        GameManager.Instance.StartRound();
     }
 
     void MouseCursor() {
