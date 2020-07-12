@@ -11,7 +11,12 @@ public class EatingSnackState : State {
 
         startTime = Time.unscaledTime;
         ItemManager.Instance.snack.Drop();
-        Debug.Log("Eating Snack");
+    }
+
+    public override void Exit(State nextState) {
+        base.Exit(nextState);
+
+        startTime = 0f;
     }
 
     public override void LogicUpdate () {
@@ -21,7 +26,7 @@ public class EatingSnackState : State {
     }
 
     public void Eat() {
-        if (startTime + 5f < Time.unscaledTime) {
+        if (startTime > 0f && startTime + 5f < Time.unscaledTime) {
             ItemManager.Instance.snack.Hide();
             stateMachine.ChangeState(cat.walking);
         }

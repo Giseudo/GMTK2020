@@ -19,6 +19,8 @@ public class ActionsUI : MonoBehaviour {
             return;
         }
 
+        if (name == "Snack") ItemManager.Instance.snack.Show();
+
         selectedAction = name;
     }
 
@@ -55,7 +57,6 @@ public class ActionsUI : MonoBehaviour {
     void RaycastCursor() {
         if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, cam.farClipPlane)) {
             hitPoint = new Vector3(hit.point.x, 0f, hit.point.z);
-            Debug.Log("Hit");
 
             if (hit.collider.tag == "Cat")
                 hoveringCat = hit.collider.GetComponent<Cat>();
