@@ -7,6 +7,18 @@ public class ChasingState : State {
 
     public ChasingState (Cat cat, StateMachine stateMachine) : base(cat, stateMachine) { }
 
+    public override void Enter (State previousState) {
+        base.Enter(previousState);
+
+        cat.animator.SetBool("Walking", true);
+    }
+
+    public override void Exit (State nextState) {
+        base.Exit(nextState);
+
+        cat.animator.SetBool("Walking", false);
+    }
+
     public override void LogicUpdate () {
         base.LogicUpdate();
 

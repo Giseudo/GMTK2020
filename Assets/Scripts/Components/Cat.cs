@@ -16,15 +16,17 @@ public class Cat : MonoBehaviour {
     public EatingSnackState eatingSnack;
     public PlayingState playing;
     [NonSerialized] public Bowl previousBowl;
+    public Animator animator;
     Bowl ClosestBowl => BowlManager.GetClosestBowl(this);
     public bool IsThief => data.type == CatType.Thief;
-
+    public float Hunger => data.hunger.RuntimeValue;
     State CurrentState => behaviorSM.CurrentState;
+
     void OnEnable() => CatManager.cats.Add(this);
     void OnDisable() => CatManager.cats.Remove(this);
 
-    public delegate void OnSwallow(Cat cat, float amount);
-    public OnSwallow onSwallow;
+    public delegate void OnEat(Cat cat, float amount);
+    public OnEat onEat;
 
     public void Initialize () {
         agent = GetComponent<NavMeshAgent>();
@@ -58,12 +60,12 @@ public class Cat : MonoBehaviour {
 
     public void LookForFood () {
         // Is the cat already eating?
-        if (behaviorSM.CurrentState == eatingMeal) return;
+        // if (behaviorSM.CurrentState == eatingMeal) return;
 
         Bowl bowl = ClosestBowl;
 
         // No meal left? Meh...
-        if (bowl == null) {
+        if (bowl == null || Hunger < 25f) {
             behaviorSM.ChangeState(walking);
             return;
         }
@@ -88,9 +90,14 @@ public class Cat : MonoBehaviour {
         return valid;
     }
 
-    public void Swallow (float amount) {
-        if (onSwallow != null)
-            onSwallow(this, amount);
+    public void Eat (float amount) {
+        if (Hunger <= 0f) {
+            amount = 0f;
+            data.hunger.RuntimeValue = 0f;
+        }
+
+        if (onEat != null)
+            onEat(this, amount);
 
         data.hunger.RuntimeValue -= amount;
     }

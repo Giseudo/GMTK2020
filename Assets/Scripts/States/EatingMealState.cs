@@ -11,6 +11,7 @@ public class EatingMealState : State {
         base.Enter(previousState);
 
         bowl.feedingCat = cat;
+        cat.animator.SetBool("Eating", true);
     }
 
     public override void Exit(State nextState) {
@@ -20,19 +21,36 @@ public class EatingMealState : State {
 
         if (bowl.feedingCat == cat)
             bowl.feedingCat = null;
+
+        cat.animator.SetBool("Eating", false);
     }
 
     public override void LogicUpdate () {
         base.LogicUpdate();
 
+        Eat();
+        FaceBowl();
+    }
+
+    void Eat () {
+        // Another cat take it from me?
         if (bowl.feedingCat != cat)
             stateMachine.ChangeState(cat.walking);
 
+        if (cat.Hunger <= 0f)
+            stateMachine.ChangeState(cat.walking);
+
+        if (bowl.FoodAmount <= 0f)
+            cat.LookForFood();
+
         float amount = bowl.Feed(cat.data.eatSpeed);
 
-        cat.Swallow(amount);
+        cat.Eat(amount);
+    }
 
-        if (bowl.FoodAmount <= 0f) // TODO Am I still hungry?
-            stateMachine.ChangeState(cat.walking);
+    void FaceBowl() {
+        Vector3 direction = Vector3.RotateTowards(cat.transform.forward, (bowl.transform.position - cat.transform.position).normalized, .5f, Time.deltaTime);
+
+        cat.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
     }
 }

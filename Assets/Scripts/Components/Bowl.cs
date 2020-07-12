@@ -8,6 +8,7 @@ public class Bowl : MonoBehaviour {
     public BowlData data;
     [NonSerialized] public Cat feedingCat;
     Material material;
+    float previousAmount;
 
     public void OnEnable () => BowlManager.bowls.Add(this);
     public void OnDisable () => BowlManager.bowls.Remove(this);
@@ -25,17 +26,18 @@ public class Bowl : MonoBehaviour {
     }
 
     public float Feed(float speed) {
-        if (data.foodAmount.RuntimeValue < 0f) {
-            data.foodAmount.RuntimeValue = 0f;
-            return 0f;
-        }
+        float currentAmount = data.foodAmount.RuntimeValue - Time.deltaTime * speed;
+        previousAmount = data.foodAmount.RuntimeValue;
 
-        data.foodAmount.RuntimeValue -= Time.deltaTime * speed;
+        // Clamp negative values
+        if (currentAmount <= 0f) currentAmount = 0f;
 
-        float amount = Mathf.InverseLerp(0f, data.foodAmount.InitialValue, data.foodAmount.RuntimeValue);
+        // Update material color
+        material.SetFloat("_Amount", Mathf.InverseLerp(0f, data.foodAmount.InitialValue, currentAmount));
 
-        material.SetFloat("_Amount", amount);
+        // Update data
+        data.foodAmount.RuntimeValue = currentAmount;
 
-        return amount;
+        return previousAmount - currentAmount;
     }
 }

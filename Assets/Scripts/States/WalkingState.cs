@@ -12,7 +12,14 @@ public class WalkingState : State {
     public override void Enter (State previousState) {
         base.Enter(previousState);
 
-        position = RandomPosition(2f);
+        position = RandomPosition(5f);
+        cat.animator.SetBool("Walking", true);
+    }
+
+    public override void Exit (State nextState) {
+        base.Exit(nextState);
+
+        cat.animator.SetBool("Walking", false);
     }
 
     public override void LogicUpdate () {
@@ -24,6 +31,7 @@ public class WalkingState : State {
 
     void Walk() {
         cat.agent.destination = position;
+
         Debug.DrawLine(cat.transform.position, position, Color.yellow);
     }
 

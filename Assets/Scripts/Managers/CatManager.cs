@@ -9,7 +9,7 @@ using UnityEditor;
 public class CatManager : MonoBehaviour {
     public static List<Cat> cats = new List<Cat>();
 
-    public void Start () {
+    public void Awake () {
         foreach (Cat cat in cats) {
             cat.Initialize();
         }
