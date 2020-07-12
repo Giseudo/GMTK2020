@@ -1387,6 +1387,26 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2911967203200002993, guid: 732cdc45a649bf944b3abb67ed8f62f3,
+        type: 3}
+      propertyPath: m_Name
+      value: VictoryDialog
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754677910584604102, guid: 732cdc45a649bf944b3abb67ed8f62f3,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754677910584604102, guid: 732cdc45a649bf944b3abb67ed8f62f3,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754677910584604102, guid: 732cdc45a649bf944b3abb67ed8f62f3,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3958549480950727948, guid: 732cdc45a649bf944b3abb67ed8f62f3,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1412,15 +1432,35 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5613602280535109726, guid: 732cdc45a649bf944b3abb67ed8f62f3,
+    - target: {fileID: 4030359951073685867, guid: 732cdc45a649bf944b3abb67ed8f62f3,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -800
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6688819792022266525, guid: 732cdc45a649bf944b3abb67ed8f62f3,
+        type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6688819792022266525, guid: 732cdc45a649bf944b3abb67ed8f62f3,
+        type: 3}
+      propertyPath: m_Text
+      value: You won!!
       objectReference: {fileID: 0}
     - target: {fileID: 7079780159592607798, guid: 732cdc45a649bf944b3abb67ed8f62f3,
         type: 3}
       propertyPath: m_Name
       value: CatsCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 8448534860782429036, guid: 732cdc45a649bf944b3abb67ed8f62f3,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8448534860782429036, guid: 732cdc45a649bf944b3abb67ed8f62f3,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 732cdc45a649bf944b3abb67ed8f62f3, type: 3}
@@ -3183,7 +3223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee608e639d3a404088728da61a9d4b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  round: 1
+  catsPerRound: 2
 --- !u!21 &1434859533
 Material:
   serializedVersion: 6

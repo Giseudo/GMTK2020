@@ -27,8 +27,7 @@ public class GameManager : MonoBehaviour {
 	}
 
     void Start() {
-        CatManager.EnableCat(catsPerRound);
-        BowlManager.EnableBowl(catsPerRound);
+        SpawnCats();
     }
 
     void Update() {
@@ -36,13 +35,16 @@ public class GameManager : MonoBehaviour {
             EndRound();
     }
 
+    public void Restart() {
+        CatManager.Reset();
+        // ItemManager.Instance.Reset();
+    }
+
     public void StartRound() {
         if (onRoundStart != null) onRoundStart();
 
         playing = true;
         started = true;
-
-        BowlManager.PlaceFood();
     }
 
     public void EndRound() {
@@ -51,9 +53,9 @@ public class GameManager : MonoBehaviour {
         if (onRoundEnd != null) onRoundEnd(deadCats);
 
         playing = false;
+    }
 
-        if (deadCats.Count > 0) return;
-
+    public void SpawnCats() {
         CatManager.EnableCat(catsPerRound);
         BowlManager.EnableBowl(catsPerRound);
     }

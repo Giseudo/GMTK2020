@@ -13,6 +13,10 @@ public class BowlManager : MonoBehaviour {
     public delegate void OnRemoveBowl(Bowl bowl);
     public static OnRemoveBowl onRemoveBowl;
 
+    public void Start () {
+        GameManager.Instance.onRoundStart += PlaceFood;
+    }
+
     public static void EnableBowl(int amount) {
         int count = 0;
         Transform parent = GameObject.Find("Bowls").transform;

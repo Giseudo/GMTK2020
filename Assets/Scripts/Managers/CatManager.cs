@@ -32,7 +32,7 @@ public class CatManager : MonoBehaviour {
         }
     }
 
-    public static void DisableBowl() {
+    public static void DisableCat() {
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Cat")) {
             if (obj.activeInHierarchy) {
                 obj.SetActive(false);
@@ -43,7 +43,6 @@ public class CatManager : MonoBehaviour {
 
     public static void AddCat (Cat cat) {
         cats.Add(cat);
-        // BowlManager.EnableBowl();
 
         if (onAddCat != null) onAddCat(cat);
 
@@ -53,7 +52,6 @@ public class CatManager : MonoBehaviour {
     public static void RemoveCat (Cat cat) {
         if (onRemoveCat != null) onRemoveCat(cat);
 
-        // BowlManager.DisableBowl();
         cats.Remove(cat);
     }
 
@@ -66,6 +64,12 @@ public class CatManager : MonoBehaviour {
         }
 
         return deadCats;
+    }
+
+    public static void Reset () {
+        foreach (Cat cat in cats) {
+            cat.data.hunger.RuntimeValue = cat.data.hunger.InitialValue;
+        }
     }
 
     public static Vector3 RandomPosition(Vector3 origin, float distance = 1f) {

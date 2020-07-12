@@ -41,6 +41,7 @@ public class Cat : MonoBehaviour {
         eatingSnack = new EatingSnackState (this, behaviorSM);
         playing = new PlayingState (this, behaviorSM);
         frightening = new FrighteningState (this, behaviorSM);
+        agent.speed  = data.walkSpeed;
 
         behaviorSM.Initialize(idling);
     }
@@ -167,6 +168,8 @@ public class Cat : MonoBehaviour {
         foreach (var hit in colliders) {
             switch (hit.tag) {
                 case "YarnBall":
+                    if (Hunger > 50) break;
+
                     playing.ball = hit.transform;
                     behaviorSM.ChangeState(playing);
                     break;
