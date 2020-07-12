@@ -26,6 +26,9 @@ public class EatingSnackState : State {
     }
 
     public void Eat() {
+        cat.data.hunger.RuntimeValue -= Time.deltaTime * cat.data.eatSpeed;
+        if (cat.onHungerChange != null) cat.onHungerChange(cat);
+
         if (startTime > 0f && startTime + 5f < Time.unscaledTime) {
             ItemManager.Instance.snack.Hide();
             stateMachine.ChangeState(cat.walking);

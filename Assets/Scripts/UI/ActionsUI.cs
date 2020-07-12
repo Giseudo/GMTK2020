@@ -10,6 +10,8 @@ public class ActionsUI : MonoBehaviour {
     Vector3 mousePos;
     Transform snack;
     public Canvas parentCanvas;
+    public Transform snacksCursor;
+    public Transform sprinklerCursor;
     public Transform yarnBallCursor;
 
     void Awake () {
@@ -42,7 +44,11 @@ public class ActionsUI : MonoBehaviour {
     }
 
     void SelectSprinkler() {
+        sprinklerCursor.gameObject.SetActive(true);
+        sprinklerCursor.position = mousePos;
+
         if (Input.GetMouseButtonDown(0) && hoveringCat) {
+            sprinklerCursor.gameObject.SetActive(false);
             ItemManager.Instance.sprinkler.Use(hoveringCat);
 
             selectedAction = null;
@@ -50,11 +56,14 @@ public class ActionsUI : MonoBehaviour {
     }
 
     void SelectSnack() {
+        snacksCursor.gameObject.SetActive(true);
+        snacksCursor.position = mousePos;
         ItemManager.Instance.snack.Move(hitPoint);
 
         if (ItemManager.Instance.snack.dropped) selectedAction = null;
 
         if (Input.GetMouseButtonDown(0)) {
+            yarnBallCursor.gameObject.SetActive(false);
             ItemManager.Instance.snack.Use();
             selectedAction = null;
         }
