@@ -25,17 +25,17 @@ public class CatsUI : MonoBehaviour {
             name.text = cat.data.nick;
 
             Text hunger = catCard.transform.GetChild(1).GetComponent<Text>();
-            hunger.text = Mathf.Round(cat.data.hunger.RuntimeValue).ToString();
+            hunger.text = cat.Hunger.ToString();
 
             catCard.transform.parent = transform;
 
             cards.Add(cat.data.nick, new CatCardUI(name, hunger));
 
-            cat.onEat += UpdateHunger;
+            cat.onHungerChange += UpdateHunger;
         }
     }
 
-    void UpdateHunger(Cat cat, float amount) {
-        cards[cat.data.nick].hunger.text = Mathf.Round(cat.data.hunger.RuntimeValue).ToString();
+    void UpdateHunger(Cat cat) {
+        cards[cat.data.nick].hunger.text = cat.Hunger.ToString();
     }
 }

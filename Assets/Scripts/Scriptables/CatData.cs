@@ -13,5 +13,6 @@ public class CatData : ScriptableObject {
     public string state;
     public CatType type;
     public float eatSpeed;
+    public float hungerSpeed;
     public FloatVariable hunger;
 }
