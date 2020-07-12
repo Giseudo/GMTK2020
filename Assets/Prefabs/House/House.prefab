@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9130937438525636508}
   - component: {fileID: 9130937438525636511}
   - component: {fileID: 9130937438525636510}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mesa_Officer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 9130937438525636484}
   - component: {fileID: 9130937438525636487}
   - component: {fileID: 9130937438525636486}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,12 +296,12 @@ GameObject:
   - component: {fileID: 624295156600714200}
   - component: {fileID: 5062389780232165536}
   - component: {fileID: 9130937438525636481}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: House_Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967263
   m_IsActive: 1
 --- !u!4 &4427586395339839479
 Transform:
@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 9130937438525636480}
   - component: {fileID: 9130937438525636483}
   - component: {fileID: 9130937438525636482}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Eletronics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -522,7 +522,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8248046850614985414}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

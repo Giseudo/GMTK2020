@@ -53,8 +53,9 @@ public class ActionsUI : MonoBehaviour {
     }
 
     void RaycastCursor() {
-        if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit)) {
+        if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, cam.farClipPlane)) {
             hitPoint = new Vector3(hit.point.x, 0f, hit.point.z);
+            Debug.Log("Hit");
 
             if (hit.collider.tag == "Cat")
                 hoveringCat = hit.collider.GetComponent<Cat>();
@@ -64,6 +65,6 @@ public class ActionsUI : MonoBehaviour {
 
         hoveringCat = null;
 
-        // Debug.DrawRay(cam.transform.position, cam.ScreenPointToRay(Input.mousePosition).direction * cam.farClipPlane, Color.red);
+        Debug.DrawRay(cam.transform.position, cam.ScreenPointToRay(Input.mousePosition).direction * cam.farClipPlane, Color.red);
     }
 }
