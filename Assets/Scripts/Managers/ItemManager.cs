@@ -23,7 +23,7 @@ public class ItemManager : MonoBehaviour {
         }
 
         public virtual void Reset() {
-
+            amount = initialAmount;
         }
     }
 
@@ -39,7 +39,6 @@ public class ItemManager : MonoBehaviour {
 
     public class SnackItem : Item {
         public bool dropped = false;
-        float droppedTime;
         GameObject snack;
 
         public SnackItem(int amount, GameObject snack) : base(amount) {
@@ -63,7 +62,6 @@ public class ItemManager : MonoBehaviour {
         }
 
         public void Drop() {
-            droppedTime = Time.unscaledTime;
             dropped = true;
         }
 
@@ -73,12 +71,46 @@ public class ItemManager : MonoBehaviour {
         }
     }
 
-    public SprinklerItem sprinkler = new SprinklerItem();
+    public class YarnItem : Item {
+        public bool dropped = false;
+        GameObject yarnBall;
+        public YarnItem(int amount, GameObject yarnBall) : base (amount) {
+            this.yarnBall = yarnBall;
+            Hide();
+        }
+        
+        public void Show() {
+            dropped = false;
+            yarnBall.SetActive(true);
+        }
+
+        public void Hide() {
+            yarnBall.SetActive(false);
+        }
+
+        public void Drop() {
+            dropped = true;
+        }
+
+        public void Use(Vector3 origin, Vector3 target) {
+            base.Use();
+            Rigidbody body = yarnBall.GetComponent<Rigidbody>();
+
+            yarnBall.transform.position = origin;
+            Show();
+
+            body.velocity = Vector3.zero;
+            body.AddForce((target - origin).normalized * 10f, ForceMode.VelocityChange);
+
+            Drop();
+        }
+    }
+
+    public SprinklerItem sprinkler;
     public SnackItem snack;
-    public Item yarnBall = new Item(2);
-
+    public YarnItem yarnBall;
     public GameObject snackPrefab;
-
+    public GameObject yarnBallPrefab;
 	public static ItemManager Instance = null;
 
 	void Awake() {
@@ -92,6 +124,8 @@ public class ItemManager : MonoBehaviour {
 	}
 
     void Start() {
+        sprinkler = new SprinklerItem();
         snack = new SnackItem(2, Instantiate(snackPrefab, transform));
+        yarnBall = new YarnItem(1, Instantiate(yarnBallPrefab, transform));
     }
 }

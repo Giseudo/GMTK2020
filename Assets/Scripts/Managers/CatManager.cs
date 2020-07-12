@@ -11,8 +11,19 @@ public class CatManager : MonoBehaviour {
     public static List<Cat> cats = new List<Cat>();
     public delegate void OnAddCat(Cat cat);
     public static OnAddCat onAddCat;
+	public static CatManager Instance = null;
 
-    public void Awake () {
+	void Awake() {
+		if (Instance == null) {
+			Instance = this;
+		} else if (Instance != this) {
+			Destroy(gameObject);
+		}
+
+		DontDestroyOnLoad (gameObject);
+	}
+
+    public void Start () {
         foreach (Cat cat in cats) {
             cat.Initialize();
             cat.onScare += OnCatScare;
