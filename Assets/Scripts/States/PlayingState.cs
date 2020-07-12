@@ -12,7 +12,8 @@ public class PlayingState : State {
         base.Enter(previousState);
 
         startTime = Time.unscaledTime;
-        cat.agent.speed += 5f;
+        cat.agent.destination = ball.position;
+        cat.agent.speed += 2f;
     }
 
     public override void Exit(State nextState) {
@@ -21,22 +22,19 @@ public class PlayingState : State {
         reachTime = 0f;
         startTime = 0f;
         cat.agent.speed = cat.data.walkSpeed;
-        cat.agent.isStopped = false;
     }
 
     public override void LogicUpdate () {
         base.LogicUpdate();
 
-        cat.agent.destination = ball.position;
-
-        if (cat.agent.remainingDistance <= .25f) {
-            cat.agent.isStopped = true;
+        if (reachTime == 0f && cat.agent.remainingDistance <= .5f) {
+            cat.agent.destination = CatManager.RandomPosition(cat.transform.position, 2f);
             reachTime = Time.unscaledTime;
         }
 
         if (reachTime + 2f < Time.unscaledTime) {
             reachTime = 0f;
-            cat.agent.isStopped = false;
+            cat.agent.destination = ball.position;
         }
 
         if (startTime + 10f < Time.unscaledTime) {

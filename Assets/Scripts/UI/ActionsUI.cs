@@ -68,7 +68,14 @@ public class ActionsUI : MonoBehaviour {
             yarnBallCursor.gameObject.SetActive(false);
             ItemManager.Instance.yarnBall.Use(mousePos, hitPoint);
             selectedAction = null;
+            StopCoroutine("DisableYarnBall");
+            StartCoroutine("DisableYarnBall");
         }
+    }
+
+    IEnumerator DisableYarnBall() {
+        yield return new WaitForSeconds(20f);
+        ItemManager.Instance.yarnBall.Hide();
     }
 
     public void FeedCats() {

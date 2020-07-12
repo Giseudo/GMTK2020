@@ -71,6 +71,8 @@ public class Cat : MonoBehaviour {
 
             if (onHungerChange != null) onHungerChange(this);
         }
+
+        animator.SetBool("Jumping", agent.isOnOffMeshLink);
     }
 
     void ClearState() {

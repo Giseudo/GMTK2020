@@ -15,6 +15,26 @@ public class BowlManager : MonoBehaviour {
         }
     }
 
+    public static float InitialMeal () {
+        float amount = 0f;
+
+        foreach (Bowl bowl in bowls) {
+            amount += bowl.InitialMeal;
+        }
+
+        return Mathf.Round(amount);
+    }
+
+    public static float RemainingMeal () {
+        float amount = 0f;
+
+        foreach (Bowl bowl in bowls) {
+            amount += bowl.RemainingMeal;
+        }
+
+        return Mathf.Round(amount);
+    }
+
     public static Bowl GetClosestBowl(Cat cat) {
         Vector3 position = cat.transform.position;
         Bowl closest = null;
@@ -23,17 +43,8 @@ public class BowlManager : MonoBehaviour {
         foreach (Bowl bowl in bowls) {
             float distance = (bowl.transform.position - position).magnitude;
 
-            /* Has no food on it
-            if (bowl.FoodAmount <= 0f) continue;
-            // Is a cat eating it?
-            if (bowl.feedingCat != null && !cat.IsThief) continue;
-            // Was I eating it just before?
-            if (bowl == cat.previousBowl) continue;
-            */
-
             if (!cat.CanEat(bowl)) continue;
 
-            // Found one
             if (previous == 0f || previous > distance) {
                 previous = distance;
                 closest = bowl;

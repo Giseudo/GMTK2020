@@ -9,6 +9,8 @@ public class Bowl : MonoBehaviour {
     [NonSerialized] public Cat feedingCat;
     Material material;
     float previousAmount;
+    public float InitialMeal => data.foodAmount.InitialValue;
+    public float RemainingMeal => data.foodAmount.RuntimeValue;
 
     public void OnEnable () => BowlManager.bowls.Add(this);
     public void OnDisable () => BowlManager.bowls.Remove(this);
