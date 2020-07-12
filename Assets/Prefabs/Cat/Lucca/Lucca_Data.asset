@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Lucca_Data
   m_EditorClassIdentifier: 
   nick: Lucca
-  state: IdlingState
+  state: WalkingState
   type: 1
+  walkSpeed: 2
   eatSpeed: 40
+  hungerSpeed: 2
   hunger: {fileID: 11400000, guid: 5acac9aff3b3d6347a178d55e175dddd, type: 2}

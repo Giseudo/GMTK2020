@@ -25,7 +25,8 @@ public class Bowl : MonoBehaviour {
         GetComponentInChildren<MeshRenderer>().material = material;
     }
 
-    public float Feed(float speed) {
+    public float Feed(Cat cat) {
+        float speed = cat.data.eatSpeed;
         float currentAmount = data.foodAmount.RuntimeValue - Time.deltaTime * speed;
         previousAmount = data.foodAmount.RuntimeValue;
 
@@ -39,5 +40,14 @@ public class Bowl : MonoBehaviour {
         data.foodAmount.RuntimeValue = currentAmount;
 
         return previousAmount - currentAmount;
+    }
+
+    public void Feeding(Cat cat) {
+        feedingCat = cat;
+    }
+
+    public void StopFeeding(Cat cat) {
+        if (feedingCat == cat)
+            feedingCat = null;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -8,10 +9,13 @@ using UnityEditor;
 
 public class CatManager : MonoBehaviour {
     public static List<Cat> cats = new List<Cat>();
+    public delegate void OnAddCat(Cat cat);
+    public static OnAddCat onAddCat;
 
     public void Awake () {
         foreach (Cat cat in cats) {
             cat.Initialize();
+            cat.onScare += OnCatScare;
         }
     }
 
@@ -19,7 +23,33 @@ public class CatManager : MonoBehaviour {
         foreach (Cat cat in cats) {
             cat.LookForFood();
         }
-   }
+    }
+
+    public void AddCat (Cat cat) {
+        if (onAddCat != null) onAddCat(cat);
+
+        cats.Add(cat);
+    }
+
+    public static Vector3 RandomPosition(Vector3 origin, float distance = 1f) {
+        Vector2 random = Random.insideUnitCircle;
+        Vector3 direction = new Vector3(random.x, 0f, random.y);
+
+        if (Physics.Raycast(origin, direction, out RaycastHit raycastHit, distance))
+            direction = (origin - raycastHit.point).normalized;
+
+        Vector3 position = direction * distance;
+        position += origin;
+
+        NavMeshHit navmeshHit;
+        NavMesh.SamplePosition(position, out navmeshHit, distance, 1);
+
+        return navmeshHit.position;
+    }
+
+    public void OnCatScare(Cat cat) {
+        SoundManager.Instance.Play("AngryCat");
+    }
 
     #if UNITY_EDITOR
     void OnDrawGizmos() {

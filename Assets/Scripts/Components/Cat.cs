@@ -15,18 +15,23 @@ public class Cat : MonoBehaviour {
     public EatingMealState eatingMeal;
     public EatingSnackState eatingSnack;
     public PlayingState playing;
+    public FrighteningState frightening;
     [NonSerialized] public Bowl previousBowl;
+    float previousBowlTime;
     public Animator animator;
     Bowl ClosestBowl => BowlManager.GetClosestBowl(this);
     public bool IsThief => data.type == CatType.Thief;
-    public float Hunger => data.hunger.RuntimeValue;
+    public float Hunger => Mathf.Round(data.hunger.RuntimeValue);
     State CurrentState => behaviorSM.CurrentState;
 
     void OnEnable() => CatManager.cats.Add(this);
     void OnDisable() => CatManager.cats.Remove(this);
 
-    public delegate void OnEat(Cat cat, float amount);
-    public OnEat onEat;
+    public delegate void OnHungerChange(Cat cat);
+    public OnHungerChange onHungerChange;
+
+    public delegate void OnScare(Cat cat);
+    public OnScare onScare;
 
     public void Initialize () {
         agent = GetComponent<NavMeshAgent>();
@@ -38,6 +43,7 @@ public class Cat : MonoBehaviour {
         eatingMeal = new EatingMealState (this, behaviorSM);
         eatingSnack = new EatingSnackState (this, behaviorSM);
         playing = new PlayingState (this, behaviorSM);
+        frightening = new FrighteningState (this, behaviorSM);
 
         behaviorSM.Initialize(walking);
     }
@@ -45,11 +51,10 @@ public class Cat : MonoBehaviour {
     void Update () {
         if (!Application.IsPlaying(gameObject)) return;
 
-        data.state = CurrentState.ToString();
-
-        behaviorSM.CurrentState.LogicUpdate();
-
+        UpdateState();
         Search();
+        behaviorSM.CurrentState.LogicUpdate();
+        ClearState();
     }
 
     void FixedUpdate() {
@@ -58,10 +63,22 @@ public class Cat : MonoBehaviour {
         behaviorSM.CurrentState.PhysicsUpdate();
     }
 
-    public void LookForFood () {
-        // Is the cat already eating?
-        // if (behaviorSM.CurrentState == eatingMeal) return;
+    void UpdateState() {
+        data.state = CurrentState.ToString();
 
+        if (CurrentState != eatingMeal) {
+            data.hunger.RuntimeValue += data.hungerSpeed * Time.deltaTime;
+
+            if (onHungerChange != null) onHungerChange(this);
+        }
+    }
+
+    void ClearState() {
+        if (previousBowlTime + 5f < Time.unscaledTime)
+            previousBowl = null;
+    }
+
+    public void LookForFood () {
         Bowl bowl = ClosestBowl;
 
         // No meal left? Meh...
@@ -87,19 +104,34 @@ public class Cat : MonoBehaviour {
         // There's no food
         if (bowl.FoodAmount <= 0f) valid = false;
 
+        // Can't eat if I'm running :(
+        if (CurrentState == frightening) valid = false;
+
         return valid;
     }
 
-    public void Eat (float amount) {
+    public void Eat (Bowl bowl) {
+        float amount = bowl.Feed(this);
+
         if (Hunger <= 0f) {
             amount = 0f;
             data.hunger.RuntimeValue = 0f;
         }
 
-        if (onEat != null)
-            onEat(this, amount);
+        if (onHungerChange != null) onHungerChange(this);
 
         data.hunger.RuntimeValue -= amount;
+    }
+
+    public void StopEating (Bowl bowl) {
+        previousBowlTime = Time.unscaledTime;
+        previousBowl = bowl;
+    }
+
+    public void Scare () {
+        behaviorSM.ChangeState(frightening);
+
+        if (onScare != null) onScare(this);
     }
 
     void Search () {

@@ -28,6 +28,7 @@ public class ChasingState : State {
 
     void Chase () {
         Vector3 position = target.position;
+
         position -= (position - cat.transform.position).normalized * .5f;
 
         cat.agent.destination = position;
