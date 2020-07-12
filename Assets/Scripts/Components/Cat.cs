@@ -138,7 +138,7 @@ public class Cat : MonoBehaviour {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
 
         foreach (var hit in colliders) {
-            switch (hit.gameObject.name) {
+            switch (hit.tag) {
                 case "Bowl":
                     if (CurrentState == eatingMeal) return;
 
@@ -155,7 +155,8 @@ public class Cat : MonoBehaviour {
 
                     break;
                 case "Snack":
-                    behaviorSM.ChangeState(eatingSnack);
+                    if (CurrentState != eatingSnack)
+                        behaviorSM.ChangeState(eatingSnack);
                     break;
                 case "YarnBall":
                     behaviorSM.ChangeState(playing);
@@ -166,7 +167,7 @@ public class Cat : MonoBehaviour {
         colliders = Physics.OverlapSphere(transform.position, 2f);
 
         foreach (var hit in colliders) {
-            switch (hit.gameObject.name) {
+            switch (hit.tag) {
                 case "YarnBall":
                 case "Snack":
                     chasing.target = hit.transform;

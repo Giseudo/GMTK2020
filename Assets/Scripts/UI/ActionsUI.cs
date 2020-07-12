@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class ActionsUI : MonoBehaviour {
     string selectedAction;
+    Cat hoveringCat;
     Camera cam;
+    Vector3 hitPoint;
+    Transform snack;
 
     void Awake () {
         cam = Camera.main;
@@ -20,22 +23,46 @@ public class ActionsUI : MonoBehaviour {
     }
 
     void Update() {
+        if (selectedAction == null) return;
+
+        RaycastCursor();
+
         if (selectedAction == "Sprinkler")
-            RaycastCursor();
+            UseSprinkler();
+        if (selectedAction == "Snack")
+            UseSnack();
+    }
+
+    void UseSprinkler() {
+        if (Input.GetMouseButtonDown(0) && hoveringCat) {
+            ItemManager.Instance.sprinkler.Use(hoveringCat);
+
+            selectedAction = null;
+        }
+    }
+
+    void UseSnack() {
+        ItemManager.Instance.snack.Move(hitPoint);
+
+        if (ItemManager.Instance.snack.dropped) selectedAction = null;
+
+        if (Input.GetMouseButtonDown(0)) {
+            ItemManager.Instance.snack.Use();
+            selectedAction = null;
+        }
     }
 
     void RaycastCursor() {
-        if (Input.GetMouseButtonDown(0)) {
-            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit)) {
-                if (hit.collider.tag == "Cat") {
-                    Cat cat = hit.collider.GetComponent<Cat>();
+        if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit)) {
+            hitPoint = new Vector3(hit.point.x, 0f, hit.point.z);
 
-                    ItemManager.Sprinkler.Use(cat);
+            if (hit.collider.tag == "Cat")
+                hoveringCat = hit.collider.GetComponent<Cat>();
 
-                    selectedAction = null;
-                }
-            }
+            return;
         }
+
+        hoveringCat = null;
 
         // Debug.DrawRay(cam.transform.position, cam.ScreenPointToRay(Input.mousePosition).direction * cam.farClipPlane, Color.red);
     }
