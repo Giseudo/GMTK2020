@@ -12,8 +12,8 @@ public class WalkingState : State {
     public override void Enter (State previousState) {
         base.Enter(previousState);
 
-        position = RandomPosition(5f);
-        cat.animator.SetBool("Walking", true);
+        position = CatManager.RandomPosition(cat.transform.position, 5f);
+        Walk();
     }
 
     public override void Exit (State nextState) {
@@ -25,11 +25,12 @@ public class WalkingState : State {
     public override void LogicUpdate () {
         base.LogicUpdate();
 
-        Walk();
         ReachTarget();
     }
 
     void Walk() {
+        cat.agent.speed = cat.data.walkSpeed;
+        cat.animator.SetBool("Walking", true);
         cat.agent.destination = position;
 
         Debug.DrawLine(cat.transform.position, position, Color.yellow);
@@ -40,21 +41,5 @@ public class WalkingState : State {
 
         if (distance <= .5f)
             stateMachine.ChangeState(cat.idling);
-    }
-
-    Vector3 RandomPosition(float distance = 1f) {
-        Vector2 random = Random.insideUnitCircle;
-        Vector3 direction = new Vector3(random.x, 0f, random.y);
-
-        if (Physics.Raycast(cat.transform.position, direction, out RaycastHit raycastHit, distance))
-            direction = (cat.transform.position - raycastHit.point).normalized;
-
-        Vector3 position = direction * distance;
-        position += cat.transform.position;
-
-        NavMeshHit navmeshHit;
-        NavMesh.SamplePosition(position, out navmeshHit, distance, 1);
-
-        return navmeshHit.position;
     }
 }

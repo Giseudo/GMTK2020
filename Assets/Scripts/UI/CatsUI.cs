@@ -27,8 +27,6 @@ public class CatsUI : MonoBehaviour {
             Text hunger = catCard.transform.GetChild(1).GetComponent<Text>();
             hunger.text = cat.Hunger.ToString();
 
-            catCard.transform.parent = transform;
-
             cards.Add(cat.data.nick, new CatCardUI(name, hunger));
 
             cat.onHungerChange += UpdateHunger;

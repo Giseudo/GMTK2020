@@ -15,6 +15,7 @@ public class Cat : MonoBehaviour {
     public EatingMealState eatingMeal;
     public EatingSnackState eatingSnack;
     public PlayingState playing;
+    public FrighteningState frightening;
     [NonSerialized] public Bowl previousBowl;
     float previousBowlTime;
     public Animator animator;
@@ -29,6 +30,9 @@ public class Cat : MonoBehaviour {
     public delegate void OnHungerChange(Cat cat);
     public OnHungerChange onHungerChange;
 
+    public delegate void OnScare(Cat cat);
+    public OnScare onScare;
+
     public void Initialize () {
         agent = GetComponent<NavMeshAgent>();
         behaviorSM = new StateMachine();
@@ -39,6 +43,7 @@ public class Cat : MonoBehaviour {
         eatingMeal = new EatingMealState (this, behaviorSM);
         eatingSnack = new EatingSnackState (this, behaviorSM);
         playing = new PlayingState (this, behaviorSM);
+        frightening = new FrighteningState (this, behaviorSM);
 
         behaviorSM.Initialize(walking);
     }
@@ -99,6 +104,9 @@ public class Cat : MonoBehaviour {
         // There's no food
         if (bowl.FoodAmount <= 0f) valid = false;
 
+        // Can't eat if I'm running :(
+        if (CurrentState == frightening) valid = false;
+
         return valid;
     }
 
@@ -118,6 +126,12 @@ public class Cat : MonoBehaviour {
     public void StopEating (Bowl bowl) {
         previousBowlTime = Time.unscaledTime;
         previousBowl = bowl;
+    }
+
+    public void Scare () {
+        behaviorSM.ChangeState(frightening);
+
+        if (onScare != null) onScare(this);
     }
 
     void Search () {
