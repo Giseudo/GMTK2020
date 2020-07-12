@@ -7,7 +7,10 @@ public class ActionsUI : MonoBehaviour {
     Cat hoveringCat;
     Camera cam;
     Vector3 hitPoint;
+    Vector3 mousePos;
     Transform snack;
+    public Canvas parentCanvas;
+    public Transform yarnBallCursor;
 
     void Awake () {
         cam = Camera.main;
@@ -27,15 +30,18 @@ public class ActionsUI : MonoBehaviour {
     void Update() {
         if (selectedAction == null) return;
 
-        RaycastCursor();
+        RaycastWorld();
+        MouseCursor();
 
         if (selectedAction == "Sprinkler")
-            UseSprinkler();
+            SelectSprinkler();
         if (selectedAction == "Snack")
-            UseSnack();
+            SelectSnack();
+        if (selectedAction == "YarnBall")
+            SelectYarnBall();
     }
 
-    void UseSprinkler() {
+    void SelectSprinkler() {
         if (Input.GetMouseButtonDown(0) && hoveringCat) {
             ItemManager.Instance.sprinkler.Use(hoveringCat);
 
@@ -43,7 +49,7 @@ public class ActionsUI : MonoBehaviour {
         }
     }
 
-    void UseSnack() {
+    void SelectSnack() {
         ItemManager.Instance.snack.Move(hitPoint);
 
         if (ItemManager.Instance.snack.dropped) selectedAction = null;
@@ -54,7 +60,35 @@ public class ActionsUI : MonoBehaviour {
         }
     }
 
-    void RaycastCursor() {
+    void SelectYarnBall() {
+        yarnBallCursor.gameObject.SetActive(true);
+        yarnBallCursor.position = mousePos;
+
+        if (Input.GetMouseButtonDown(0)) {
+            yarnBallCursor.gameObject.SetActive(false);
+            ItemManager.Instance.yarnBall.Use(mousePos, hitPoint);
+            selectedAction = null;
+        }
+    }
+
+    public void FeedCats() {
+        CatManager.Instance.FeedCats();
+    }
+
+    void MouseCursor() {
+        Vector2 movePos;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            parentCanvas.transform as RectTransform,
+            Input.mousePosition, parentCanvas.worldCamera,
+            out movePos);
+
+        mousePos = parentCanvas.transform.TransformPoint(movePos);
+    }
+
+    void RaycastWorld() {
+        Debug.DrawRay(cam.transform.position, cam.ScreenPointToRay(Input.mousePosition).direction * cam.farClipPlane, Color.red);
+
         if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, cam.farClipPlane)) {
             hitPoint = new Vector3(hit.point.x, 0f, hit.point.z);
 
@@ -65,7 +99,5 @@ public class ActionsUI : MonoBehaviour {
         }
 
         hoveringCat = null;
-
-        Debug.DrawRay(cam.transform.position, cam.ScreenPointToRay(Input.mousePosition).direction * cam.farClipPlane, Color.red);
     }
 }
