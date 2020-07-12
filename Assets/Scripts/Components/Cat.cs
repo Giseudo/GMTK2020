@@ -135,6 +135,8 @@ public class Cat : MonoBehaviour {
     }
 
     void Search () {
+        if (CurrentState == eatingSnack) return;
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
 
         foreach (var hit in colliders) {
@@ -155,9 +157,8 @@ public class Cat : MonoBehaviour {
 
                     break;
                 case "Snack":
-                    if (CurrentState != eatingSnack)
-                        behaviorSM.ChangeState(eatingSnack);
-                    break;
+                    behaviorSM.ChangeState(eatingSnack);
+                    return;
                 case "YarnBall":
                     behaviorSM.ChangeState(playing);
                     break;
