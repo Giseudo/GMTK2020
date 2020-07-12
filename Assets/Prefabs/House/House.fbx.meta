@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Eletronics_M
+    second: {fileID: 2100000, guid: 4d0f688bb7ce5054da87e61477d2f447, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: House_Mat
     second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   - first:
@@ -14,6 +19,21 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: No Name
     second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Room_M
+    second: {fileID: 2100000, guid: 1cebe9f1ed7f5a84baf987f96b90290e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tables_M
+    second: {fileID: 2100000, guid: 609e2e72ab71e3541a6f8fb329d9084d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Walls_M
+    second: {fileID: 2100000, guid: 247bd7d119bebe2448b77717d029fe8a, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
