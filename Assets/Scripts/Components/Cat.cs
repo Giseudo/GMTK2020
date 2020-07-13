@@ -29,8 +29,10 @@ public class Cat : MonoBehaviour {
 
     public delegate void OnHungerChange(Cat cat);
     public OnHungerChange onHungerChange;
+    Material material;
 
     public void Initialize () {
+        material = GetComponentInChildren<Renderer>().sharedMaterial;
         agent = GetComponent<NavMeshAgent>();
         behaviorSM = new StateMachine();
 
@@ -66,13 +68,16 @@ public class Cat : MonoBehaviour {
 
         if (!GameManager.Instance.IsPlaying) return;
 
-        if (CurrentState != eatingMeal) {
+        if (CurrentState != eatingMeal && CurrentState != eatingSnack) {
             data.hunger.RuntimeValue += data.hungerSpeed * Time.deltaTime;
 
             if (onHungerChange != null) onHungerChange(this);
         }
 
         animator.SetBool("Jumping", agent.isOnOffMeshLink);
+
+        float hunger = Mathf.InverseLerp(0f, data.hunger.InitialValue * 2f, data.hunger.RuntimeValue);
+        material.SetFloat("_Hunger", hunger);
     }
 
     void ClearState() {
@@ -158,8 +163,11 @@ public class Cat : MonoBehaviour {
 
                     break;
                 case "Snack":
-                    behaviorSM.ChangeState(eatingSnack);
-                    return;
+                    if (Hunger > 50f) {
+                        behaviorSM.ChangeState(eatingSnack);
+                        return;
+                    }
+                    break;
             }
         }
 
@@ -174,8 +182,10 @@ public class Cat : MonoBehaviour {
                     behaviorSM.ChangeState(playing);
                     break;
                 case "Snack":
-                    chasing.target = hit.transform;
-                    behaviorSM.ChangeState(chasing);
+                    if (Hunger > 100f) {
+                        chasing.target = hit.transform;
+                        behaviorSM.ChangeState(chasing);
+                    }
                     break;
             }
         }

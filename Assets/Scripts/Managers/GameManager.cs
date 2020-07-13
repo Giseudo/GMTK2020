@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     int round = 1;
@@ -22,8 +23,6 @@ public class GameManager : MonoBehaviour {
 		} else if (Instance != this) {
 			Destroy(gameObject);
 		}
-
-		DontDestroyOnLoad (gameObject);
 	}
 
     void Start() {
@@ -36,11 +35,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public void Restart() {
-        CatManager.Reset();
-        // ItemManager.Instance.Reset();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void StartRound() {
+
+        if (playing) return;
+
         if (onRoundStart != null) onRoundStart();
 
         playing = true;

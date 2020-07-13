@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class DialogUI : MonoBehaviour {
     Vector3 initialPosition;
+    RectTransform rectTransform;
     [SerializeField] Transform victoryDialog;
     [SerializeField] Transform defeatDialog;
 
     void Start() {
-        initialPosition = transform.localPosition;
         GameManager.Instance.onRoundEnd += showDialog;
+        rectTransform = GetComponent<RectTransform>();
     }
 
     void showDialog(List<Cat> deadCats) {
-        transform.localPosition = Vector3.zero;
+        rectTransform.anchorMin = new Vector2(0, 0);
+        rectTransform.anchorMax = new Vector2(1, 1);
 
         if (deadCats.Count == 0)
             victoryDialog.gameObject.SetActive(true);
@@ -28,12 +30,15 @@ public class DialogUI : MonoBehaviour {
     }
 
     public void Restart() {
+        GameManager.Instance.Restart();
         Close();
     }
 
     void Close () {
         victoryDialog.gameObject.SetActive(false);
         defeatDialog.gameObject.SetActive(false);
-        transform.localPosition = initialPosition;
+
+        rectTransform.anchorMin = new Vector2(0, -1);
+        rectTransform.anchorMax = new Vector2(1, 0);
     }
 }

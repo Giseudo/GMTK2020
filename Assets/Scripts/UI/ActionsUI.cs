@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ActionsUI : MonoBehaviour {
     string selectedAction;
@@ -13,26 +14,40 @@ public class ActionsUI : MonoBehaviour {
     public Transform snacksCursor;
     public Transform sprinklerCursor;
     public Transform yarnBallCursor;
+    public Button snackButton;
+    public Button yarnButton;
+    public Button sprinkleButton;
+    public Button feedButton;
 
     void Awake () {
         cam = Camera.main;
     }
 
+    void Start () {
+        GameManager.Instance.onRoundStart += EnableActions;
+        GameManager.Instance.onRoundEnd += DisableActions;
+    }
+
     public void SelectAction(string name) {
+        if (!GameManager.Instance.IsPlaying) return;
+
         if (selectedAction == name) {
             selectedAction = null;
             return;
         }
 
-        if (name == "Snack") ItemManager.Instance.snack.Show();
+        if (name == "Snack") {
+            ItemManager.Instance.snack.Show(hitPoint);
+        }
 
         selectedAction = name;
     }
 
     void Update() {
+        RaycastWorld();
+
         if (selectedAction == null) return;
 
-        RaycastWorld();
         MouseCursor();
 
         if (selectedAction == "Sprinkler")
@@ -41,6 +56,20 @@ public class ActionsUI : MonoBehaviour {
             SelectSnack();
         if (selectedAction == "YarnBall")
             SelectYarnBall();
+    }
+
+    void EnableActions() {
+        snackButton.interactable = true;
+        yarnButton.interactable = true;
+        sprinkleButton.interactable = true;
+        feedButton.interactable = false;
+    }
+
+    void DisableActions(List<Cat> deadCats) {
+        snackButton.interactable = false;
+        yarnButton.interactable = false;
+        sprinkleButton.interactable = false;
+        feedButton.interactable = true;
     }
 
     void SelectSprinkler() {
@@ -60,10 +89,13 @@ public class ActionsUI : MonoBehaviour {
         snacksCursor.position = mousePos;
         ItemManager.Instance.snack.Move(hitPoint);
 
-        if (ItemManager.Instance.snack.dropped) selectedAction = null;
+        if (ItemManager.Instance.snack.dropped) {
+            snacksCursor.gameObject.SetActive(false);
+            selectedAction = null;
+        }
 
         if (Input.GetMouseButtonDown(0)) {
-            yarnBallCursor.gameObject.SetActive(false);
+            snacksCursor.gameObject.SetActive(false);
             ItemManager.Instance.snack.Use();
             selectedAction = null;
         }

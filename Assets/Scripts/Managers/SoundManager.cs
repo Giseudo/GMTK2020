@@ -19,8 +19,6 @@ public class SoundManager : MonoBehaviour {
 		} else if (Instance != this) {
 			Destroy(gameObject);
 		}
-
-		DontDestroyOnLoad (gameObject);
 	}
 
     public void Play (string name) {

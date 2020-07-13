@@ -15,12 +15,17 @@ public class EatingSnackState : State {
 
     public override void Exit(State nextState) {
         base.Exit(nextState);
-
         startTime = 0f;
     }
 
     public override void LogicUpdate () {
         base.LogicUpdate();
+
+        if (cat.Hunger <= 0f) {
+            ItemManager.Instance.snack.Hide();
+            stateMachine.ChangeState(cat.walking);
+            return;
+        }
 
         Eat();
     }
@@ -29,7 +34,7 @@ public class EatingSnackState : State {
         cat.data.hunger.RuntimeValue -= Time.deltaTime * cat.data.eatSpeed;
         if (cat.onHungerChange != null) cat.onHungerChange(cat);
 
-        if (startTime > 0f && startTime + 5f < Time.unscaledTime) {
+        if (startTime > 0f && startTime + 3f < Time.unscaledTime) {
             ItemManager.Instance.snack.Hide();
             stateMachine.ChangeState(cat.walking);
         }

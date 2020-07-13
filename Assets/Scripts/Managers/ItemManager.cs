@@ -52,7 +52,8 @@ public class ItemManager : MonoBehaviour {
             snack.transform.position = position;
         }
         
-        public void Show() {
+        public void Show(Vector3 position) {
+            snack.transform.position = position;
             dropped = false;
             snack.SetActive(true);
         }
