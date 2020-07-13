@@ -10,6 +10,6 @@ public class MealUI : MonoBehaviour {
         float total = BowlManager.InitialMeal();
         float t = Mathf.InverseLerp(0f, total, remaining);
 
-        remainingMealBar.localScale = new Vector3(t, 1, 1);
+        remainingMealBar.localScale = new Vector3(1, t, 1);
     }
 }
