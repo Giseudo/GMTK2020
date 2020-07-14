@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class ActionsUI : MonoBehaviour {
     string selectedAction;
@@ -16,7 +17,7 @@ public class ActionsUI : MonoBehaviour {
     public Transform yarnBallCursor;
     public Button snackButton;
     public Button yarnButton;
-    public Button sprinkleButton;
+    public Button sprinklerButton;
     public Button feedButton;
 
     void Awake () {
@@ -58,33 +59,41 @@ public class ActionsUI : MonoBehaviour {
             SelectYarnBall();
     }
 
+    void LateUpdate() {
+        UpdateItemsAmount();
+    }
+
     void EnableActions() {
         snackButton.interactable = true;
         yarnButton.interactable = true;
-        sprinkleButton.interactable = true;
+        sprinklerButton.interactable = true;
         feedButton.interactable = false;
     }
 
     void DisableActions(List<Cat> deadCats) {
         snackButton.interactable = false;
         yarnButton.interactable = false;
-        sprinkleButton.interactable = false;
+        sprinklerButton.interactable = false;
         feedButton.interactable = true;
     }
 
     void SelectSprinkler() {
+        if (ItemManager.Instance.sprinkler.amount == 0) return;
+
         sprinklerCursor.gameObject.SetActive(true);
         sprinklerCursor.position = mousePos;
 
-        if (Input.GetMouseButtonDown(0) && hoveringCat) {
+        if (Input.GetMouseButtonDown(0) && hitPoint.magnitude > 0f) {
             sprinklerCursor.gameObject.SetActive(false);
-            ItemManager.Instance.sprinkler.Use(hoveringCat);
+            ItemManager.Instance.sprinkler.Use(hitPoint);
 
             selectedAction = null;
         }
     }
 
     void SelectSnack() {
+        if (ItemManager.Instance.snack.amount == 0) return;
+
         snacksCursor.gameObject.SetActive(true);
         snacksCursor.position = mousePos;
         ItemManager.Instance.snack.Move(hitPoint);
@@ -94,7 +103,7 @@ public class ActionsUI : MonoBehaviour {
             selectedAction = null;
         }
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && hitPoint.magnitude > 0f) {
             snacksCursor.gameObject.SetActive(false);
             ItemManager.Instance.snack.Use();
             selectedAction = null;
@@ -102,25 +111,16 @@ public class ActionsUI : MonoBehaviour {
     }
 
     void SelectYarnBall() {
+        if (ItemManager.Instance.yarnBall.amount == 0) return;
+
         yarnBallCursor.gameObject.SetActive(true);
         yarnBallCursor.position = mousePos;
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && hitPoint.magnitude > 0f) {
             yarnBallCursor.gameObject.SetActive(false);
             ItemManager.Instance.yarnBall.Use(mousePos, hitPoint);
             selectedAction = null;
-            StopCoroutine("DisableYarnBall");
-            StartCoroutine("DisableYarnBall");
         }
-    }
-
-    IEnumerator DisableYarnBall() {
-        yield return new WaitForSeconds(20f);
-        ItemManager.Instance.yarnBall.Hide();
-    }
-
-    public void FeedCats() {
-        GameManager.Instance.StartRound();
     }
 
     void MouseCursor() {
@@ -137,15 +137,34 @@ public class ActionsUI : MonoBehaviour {
     void RaycastWorld() {
         Debug.DrawRay(cam.transform.position, cam.ScreenPointToRay(Input.mousePosition).direction * cam.farClipPlane, Color.red);
 
-        if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, cam.farClipPlane)) {
-            hitPoint = new Vector3(hit.point.x, 0f, hit.point.z);
+        if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 50f)) {
+            NavMeshHit navmeshHit;
 
-            if (hit.collider.tag == "Cat")
-                hoveringCat = hit.collider.GetComponent<Cat>();
-
-            return;
+            if (NavMesh.SamplePosition(hit.point, out navmeshHit, 1f, 1)) {
+                hitPoint = navmeshHit.position;
+                return;
+            }
         }
 
-        hoveringCat = null;
+        hitPoint = Vector3.zero;
+    }
+
+    void UpdateItemsAmount() {
+        int yarnAmount = ItemManager.Instance.yarnBall.amount;
+        int snackAmount = ItemManager.Instance.snack.amount;
+        int sprinklerAmount = ItemManager.Instance.sprinkler.amount;
+
+        if (yarnAmount == 0)
+            yarnButton.interactable = false;
+
+        if (snackAmount == 0)
+            snackButton.interactable = false;
+
+        if (sprinklerAmount == 0)
+            sprinklerButton.interactable = false;
+
+        yarnButton.GetComponentInChildren<Text>().text = yarnAmount.ToString();
+        snackButton.GetComponentInChildren<Text>().text = snackAmount.ToString();
+        sprinklerButton.GetComponentInChildren<Text>().text = sprinklerAmount.ToString();
     }
 }

@@ -29,6 +29,11 @@ public class PlayingState : State {
     public override void LogicUpdate () {
         base.LogicUpdate();
 
+        if (ball == null) {
+            stateMachine.ChangeState(cat.idling);
+            return;
+        }
+
         if (reachTime == 0f && cat.agent.remainingDistance <= .5f) {
             cat.agent.destination = CatManager.RandomPosition(cat.transform.position, 2f);
             reachTime = Time.unscaledTime;

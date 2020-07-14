@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EatingSnackState : State {
+    public Transform snack;
     float startTime;
     public EatingSnackState (Cat cat, StateMachine stateMachine) : base(cat, stateMachine) { }
 
@@ -21,8 +22,7 @@ public class EatingSnackState : State {
     public override void LogicUpdate () {
         base.LogicUpdate();
 
-        if (cat.Hunger <= 0f) {
-            ItemManager.Instance.snack.Hide();
+        if (cat.Hunger <= 0f || snack == null) {
             stateMachine.ChangeState(cat.walking);
             return;
         }
@@ -35,7 +35,6 @@ public class EatingSnackState : State {
         if (cat.onHungerChange != null) cat.onHungerChange(cat);
 
         if (startTime > 0f && startTime + 3f < Time.unscaledTime) {
-            ItemManager.Instance.snack.Hide();
             stateMachine.ChangeState(cat.walking);
         }
     }

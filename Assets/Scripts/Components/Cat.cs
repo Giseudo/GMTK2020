@@ -164,6 +164,7 @@ public class Cat : MonoBehaviour {
                     break;
                 case "Snack":
                     if (Hunger > 50f) {
+                        eatingSnack.snack = hit.transform;
                         behaviorSM.ChangeState(eatingSnack);
                         return;
                     }

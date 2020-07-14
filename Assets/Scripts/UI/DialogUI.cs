@@ -25,7 +25,7 @@ public class DialogUI : MonoBehaviour {
     }
 
     public void Continue() {
-        GameManager.Instance.SpawnCats();
+        GameManager.Instance.NextRound();
         Close();
     }
 

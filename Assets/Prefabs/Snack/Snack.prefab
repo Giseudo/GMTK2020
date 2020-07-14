@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 154092935582279554}
   - component: {fileID: 51026329167873909}
+  - component: {fileID: 935081758244368725}
   m_Layer: 0
   m_Name: Snack
   m_TagString: Snack
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2047332176131565527}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.056, y: 2.056, z: 2.056}
   m_Children:
   - {fileID: 4336380525646209749}
   m_Father: {fileID: 0}
@@ -45,6 +46,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.15, z: 0.15}
   m_Center: {x: 0, y: 0.075, z: 0}
+--- !u!114 &935081758244368725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047332176131565527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24cbfeed925cdb340b8a08afb731411b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnabled: 0
+  secondsToDestroy: 5
 --- !u!1 &8794431339834936803
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,7 +118,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 082aaae292a1bc24a95f5023ee6e1de8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

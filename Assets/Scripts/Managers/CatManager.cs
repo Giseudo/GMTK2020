@@ -44,6 +44,8 @@ public class CatManager : MonoBehaviour {
     public static void AddCat (Cat cat) {
         cats.Add(cat);
 
+        cat.data.hunger.RuntimeValue = cat.data.hunger.InitialValue;
+
         Material material = cat.GetComponentInChildren<Renderer>().sharedMaterial;
         material.SetFloat("_Hunger", Mathf.InverseLerp(0f, cat.data.hunger.InitialValue * 2, cat.data.hunger.InitialValue));
 
