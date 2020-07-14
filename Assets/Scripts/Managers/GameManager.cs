@@ -39,13 +39,14 @@ public class GameManager : MonoBehaviour {
     }
 
     public void StartRound() {
-
         if (playing) return;
 
         if (onRoundStart != null) onRoundStart();
 
         playing = true;
         started = true;
+
+        CatManager.FeedTheCats();
     }
 
     public void EndRound() {
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void SpawnCats() {
-        CatManager.EnableCat(catsPerRound);
         BowlManager.EnableBowl(catsPerRound);
+        CatManager.EnableCat(catsPerRound);
     }
 }

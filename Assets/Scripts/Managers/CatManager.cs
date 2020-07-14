@@ -45,7 +45,7 @@ public class CatManager : MonoBehaviour {
         cats.Add(cat);
 
         Material material = cat.GetComponentInChildren<Renderer>().sharedMaterial;
-        material.SetFloat("_Hunger", Mathf.InverseLerp(0f, cat.data.hunger.InitialValue * 2, cat.Hunger));
+        material.SetFloat("_Hunger", Mathf.InverseLerp(0f, cat.data.hunger.InitialValue * 2, cat.data.hunger.InitialValue));
 
         if (onAddCat != null) onAddCat(cat);
 
@@ -67,6 +67,12 @@ public class CatManager : MonoBehaviour {
         }
 
         return deadCats;
+    }
+
+    public static void FeedTheCats () {
+        foreach (Cat cat in cats) {
+            cat.LookForFood();
+        }
     }
 
     public static void Reset () {

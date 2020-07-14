@@ -14,6 +14,8 @@ public class PlayingState : State {
         startTime = Time.unscaledTime;
         cat.agent.destination = ball.position;
         cat.agent.speed += 2f;
+
+        cat.animator.SetBool("Walking", true);
     }
 
     public override void Exit(State nextState) {

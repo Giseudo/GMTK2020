@@ -23,5 +23,10 @@ public class IdlingState : State {
 
         if (elapsedTime >= 2f)
             cat.LookForFood();
+
+        float distance = (cat.agent.destination - cat.transform.position).magnitude;
+
+        if (distance > 2f)
+            stateMachine.ChangeState(cat.walking);
     }
 }

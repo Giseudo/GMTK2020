@@ -31,6 +31,10 @@ public class Cat : MonoBehaviour {
     public OnHungerChange onHungerChange;
     Material material;
 
+    public void Start() {
+        agent.updateRotation = false;
+    }
+
     public void Initialize () {
         material = GetComponentInChildren<Renderer>().sharedMaterial;
         agent = GetComponent<NavMeshAgent>();
@@ -52,9 +56,13 @@ public class Cat : MonoBehaviour {
         if (!Application.IsPlaying(gameObject)) return;
 
         UpdateState();
-        Search();
         behaviorSM.CurrentState.LogicUpdate();
         ClearState();
+    }
+
+    void LateUpdate() {
+        Search();
+        FaceDirection();
     }
 
     void FixedUpdate() {
@@ -68,16 +76,8 @@ public class Cat : MonoBehaviour {
 
         if (!GameManager.Instance.IsPlaying) return;
 
-        if (CurrentState != eatingMeal && CurrentState != eatingSnack) {
-            data.hunger.RuntimeValue += data.hungerSpeed * Time.deltaTime;
-
-            if (onHungerChange != null) onHungerChange(this);
-        }
-
         animator.SetBool("Jumping", agent.isOnOffMeshLink);
-
-        float hunger = Mathf.InverseLerp(0f, data.hunger.InitialValue * 2f, data.hunger.RuntimeValue);
-        material.SetFloat("_Hunger", hunger);
+        IncreaseHunger();
     }
 
     void ClearState() {
@@ -89,7 +89,7 @@ public class Cat : MonoBehaviour {
         Bowl bowl = ClosestBowl;
 
         // No meal left? Meh...
-        if (bowl == null || Hunger < 25f) {
+        if (bowl == null || Hunger < 50f) {
             behaviorSM.ChangeState(walking);
             return;
         }
@@ -171,12 +171,12 @@ public class Cat : MonoBehaviour {
             }
         }
 
-        colliders = Physics.OverlapSphere(transform.position, 2f);
+        colliders = Physics.OverlapSphere(transform.position, 3f);
 
         foreach (var hit in colliders) {
             switch (hit.tag) {
                 case "YarnBall":
-                    if (Hunger > 50) break;
+                    if (Hunger > 100) break;
 
                     playing.ball = hit.transform;
                     behaviorSM.ChangeState(playing);
@@ -189,5 +189,25 @@ public class Cat : MonoBehaviour {
                     break;
             }
         }
+    }
+
+    void FaceDirection() {
+        if (agent.velocity.magnitude < .1f) return;
+
+        Quaternion agentRotation = Quaternion.LookRotation(agent.velocity.normalized);
+        Quaternion desiredRotation = Quaternion.RotateTowards(transform.rotation, agentRotation, 500f * Time.deltaTime);
+
+        transform.rotation = desiredRotation;
+    }
+
+    void IncreaseHunger() {
+        if (CurrentState != eatingMeal && CurrentState != eatingSnack && Hunger < data.hunger.InitialValue * 2) {
+            data.hunger.RuntimeValue += data.hungerSpeed * Time.deltaTime;
+
+            if (onHungerChange != null) onHungerChange(this);
+        }
+
+        float hunger = Mathf.InverseLerp(0f, data.hunger.InitialValue * 2f, data.hunger.RuntimeValue);
+        material.SetFloat("_Hunger", hunger);
     }
 }
