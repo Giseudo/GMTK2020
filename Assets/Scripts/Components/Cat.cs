@@ -136,6 +136,8 @@ public class Cat : MonoBehaviour {
     }
 
     public void Scare () {
+        if (Hunger > 150f) return;
+
         behaviorSM.ChangeState(frightening);
     }
 
