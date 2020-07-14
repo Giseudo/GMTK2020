@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 9130937438525636484}
   - component: {fileID: 9130937438525636487}
   - component: {fileID: 9130937438525636486}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -610,7 +610,7 @@ GameObject:
   - component: {fileID: 9130937438525636480}
   - component: {fileID: 9130937438525636483}
   - component: {fileID: 9130937438525636482}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: Eletronics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -702,8 +702,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.832943, y: 2.6114006, z: 7.1380033}
-  m_Center: {x: 6.5779696, y: -0.71746165, z: 7.9235406}
+  m_Size: {x: 1.832943, y: 2.6114006, z: 11.311478}
+  m_Center: {x: 6.5779696, y: -0.7174616, z: 5.8368034}
 --- !u!65 &9130937438525636482
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -715,8 +715,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.489788, y: 2.1578498, z: 2.3503761}
-  m_Center: {x: -3.6369276, y: -0.9442367, z: 7.280533}
+  m_Size: {x: 5.489788, y: 1.0058689, z: 2.3503761}
+  m_Center: {x: -3.6369276, y: -1.5202272, z: 7.280533}
 --- !u!1 &8248046850614985414
 GameObject:
   m_ObjectHideFlags: 0

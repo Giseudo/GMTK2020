@@ -1,25 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemManager : MonoBehaviour {
     public class Item {
-        int amount;
+        public int amount { get; private set; }
         int initialAmount;
+        protected GameObject prefab;
+        public GameObject instance;
+        protected Transform parent;
         public delegate void OnUse();
         public OnUse onUse;
 
-        public Item(int amount = 1000) {
+        public Item(int amount, GameObject prefab, Transform parent) {
             this.amount = amount;
             this.initialAmount = amount;
+            this.prefab = prefab;
+            this.parent = parent;
         }
 
         public virtual void Use() {
-            if (this.amount == 0) return;
+            if (amount == 0) return;
 
             if (onUse != null) onUse();
 
-            this.amount--;
+            SetAmount(amount - 1);
+        }
+
+        public void SetAmount(int amount) {
+            this.amount = amount;
+        }
+
+        public void Destroy() {
+            if (instance != null)
+                GameObject.Destroy(instance);
         }
 
         public virtual void Reset() {
@@ -28,65 +43,60 @@ public class ItemManager : MonoBehaviour {
     }
 
     public class SprinklerItem : Item {
-        public SprinklerItem() { }
+        public SprinklerItem(int amount, GameObject prefab, Transform parent) : base (amount, prefab, parent) { }
 
-        public void Use(Cat cat) {
+        public void Use(Vector3 position) {
             base.Use();
 
-            cat.Scare();
+            instance = Instantiate(prefab, parent);
+            instance.transform.position = position;
+
+            // TODO Play soound
         }
     }
 
     public class SnackItem : Item {
         public bool dropped = false;
-        GameObject snack;
 
-        public SnackItem(int amount, GameObject snack) : base(amount) {
-            this.snack = snack;
-            Hide();
-        }
+        public SnackItem(int amount, GameObject prefab, Transform parent) : base(amount, prefab, parent) { }
 
         public void Move(Vector3 position) {
-            if (dropped) return;
+            if (dropped || instance.transform == null) return;
 
-            snack.transform.position = position;
+            if (position.magnitude == 0) {
+                instance.transform.position = Vector3.down * 1000f;
+                return;
+            }
+
+            instance.transform.position = position;
         }
         
         public void Show(Vector3 position) {
-            snack.transform.position = position;
+            instance = Instantiate(prefab, parent);
+            instance.transform.position = position;
             dropped = false;
-            snack.SetActive(true);
-        }
-
-        public void Hide() {
-            snack.SetActive(false);
+            instance.SetActive(true);
         }
 
         public void Drop() {
             dropped = true;
+            instance.GetComponent<DestroyAfterTime>().Enable();
         }
 
         public override void Use() {
             base.Use();
+
             Drop();
         }
     }
 
     public class YarnItem : Item {
         public bool dropped = false;
-        GameObject yarnBall;
-        public YarnItem(int amount, GameObject yarnBall) : base (amount) {
-            this.yarnBall = yarnBall;
-            Hide();
-        }
+        public YarnItem(int amount, GameObject prefab, Transform parent) : base (amount, prefab, parent) { }
         
         public void Show() {
+            instance = Instantiate(prefab, parent);
             dropped = false;
-            yarnBall.SetActive(true);
-        }
-
-        public void Hide() {
-            yarnBall.SetActive(false);
         }
 
         public void Drop() {
@@ -95,13 +105,14 @@ public class ItemManager : MonoBehaviour {
 
         public void Use(Vector3 origin, Vector3 target) {
             base.Use();
-            Rigidbody body = yarnBall.GetComponent<Rigidbody>();
-
-            yarnBall.transform.position = origin;
             Show();
 
+            Rigidbody body = instance.GetComponent<Rigidbody>();
+
+            instance.transform.position = origin;
+
             body.velocity = Vector3.zero;
-            body.AddForce((target - origin).normalized * 10f, ForceMode.VelocityChange);
+            body.AddForce((target - origin).normalized * 50f, ForceMode.VelocityChange);
 
             Drop();
         }
@@ -112,6 +123,7 @@ public class ItemManager : MonoBehaviour {
     public YarnItem yarnBall;
     public GameObject snackPrefab;
     public GameObject yarnBallPrefab;
+    public GameObject sprinklerPrefab;
 	public static ItemManager Instance = null;
 
 	void Awake() {
@@ -125,8 +137,8 @@ public class ItemManager : MonoBehaviour {
 	}
 
     void Start() {
-        sprinkler = new SprinklerItem();
-        snack = new SnackItem(2, Instantiate(snackPrefab, transform));
-        yarnBall = new YarnItem(1, Instantiate(yarnBallPrefab, transform));
+        snack = new SnackItem(3, snackPrefab, transform);
+        sprinkler = new SprinklerItem(5, sprinklerPrefab, transform);
+        yarnBall = new YarnItem(50, yarnBallPrefab, transform);
     }
 }
