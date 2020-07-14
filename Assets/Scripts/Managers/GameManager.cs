@@ -57,6 +57,11 @@ public class GameManager : MonoBehaviour {
         playing = false;
     }
 
+    public void NextRound() {
+        SpawnCats();
+        StartRound();
+    }
+
     public void SpawnCats() {
         BowlManager.EnableBowl(catsPerRound);
         CatManager.EnableCat(catsPerRound);
