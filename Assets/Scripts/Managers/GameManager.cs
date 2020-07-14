@@ -58,6 +58,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void NextRound() {
+        ItemManager.Instance.yarnBall.Reset();
+        ItemManager.Instance.snack.Reset();
+        ItemManager.Instance.sprinkler.Reset();
+
         SpawnCats();
         StartRound();
     }

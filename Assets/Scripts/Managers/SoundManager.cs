@@ -21,7 +21,7 @@ public class SoundManager : MonoBehaviour {
 		}
 	}
 
-    public void Play (string name) {
+    public void Play (string name, float volume = 1f) {
         AudioClip audioClip = soundClips.Find(clip => clip.name == name).clip;
 
         if (audioClip == null) {
@@ -29,6 +29,6 @@ public class SoundManager : MonoBehaviour {
             return;
         }
 
-        GetComponent<AudioSource>().PlayOneShot(audioClip, .5f);
+        GetComponent<AudioSource>().PlayOneShot(audioClip, volume);
     }
 }

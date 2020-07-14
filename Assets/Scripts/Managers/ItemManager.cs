@@ -139,6 +139,6 @@ public class ItemManager : MonoBehaviour {
     void Start() {
         snack = new SnackItem(3, snackPrefab, transform);
         sprinkler = new SprinklerItem(5, sprinklerPrefab, transform);
-        yarnBall = new YarnItem(50, yarnBallPrefab, transform);
+        yarnBall = new YarnItem(2, yarnBallPrefab, transform);
     }
 }

@@ -17,7 +17,7 @@ public class Sprinkler : MonoBehaviour
     void SearchCats() {
         foreach (Cat cat in CatManager.cats) {
             if ((cat.transform.position - transform.position).magnitude <= radius) {
-                cat.Scare();
+                cat.Scare(transform.position);
             }
         }
     }

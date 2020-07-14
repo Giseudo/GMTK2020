@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class FrighteningState : State {
     float startTime;
+    public Vector3 scaredAtPosition;
     public FrighteningState (Cat cat, StateMachine stateMachine) : base(cat, stateMachine) { }
 
     public override void Enter (State previousState) {
         base.Enter(previousState);
         startTime = Time.unscaledTime;
-        SoundManager.Instance.Play("AngryCat");
+        SoundManager.Instance.Play("AngryCat", .2f);
 
-        Flee(CatManager.RandomPosition(cat.transform.position, 5f));
+        Flee((cat.transform.position - scaredAtPosition) * 3f);
     }
 
     public override void LogicUpdate () {
         base.LogicUpdate();
 
-        if (startTime + 2f < Time.unscaledTime)
+        if (startTime + 1f < Time.unscaledTime)
             stateMachine.ChangeState(cat.walking);
     }
 

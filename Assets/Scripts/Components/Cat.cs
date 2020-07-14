@@ -30,6 +30,7 @@ public class Cat : MonoBehaviour {
     public delegate void OnHungerChange(Cat cat);
     public OnHungerChange onHungerChange;
     Material material;
+    float lastTimeScared = 0f;
 
     public void Start() {
         agent.updateRotation = false;
@@ -135,10 +136,15 @@ public class Cat : MonoBehaviour {
         previousBowl = bowl;
     }
 
-    public void Scare () {
+    public void Scare (Vector3 position) {
         if (Hunger > 150f) return;
 
-        behaviorSM.ChangeState(frightening);
+        if (lastTimeScared + .5f < Time.unscaledTime){
+            frightening.scaredAtPosition = position;
+            behaviorSM.ChangeState(frightening);
+        }
+
+        lastTimeScared = Time.unscaledTime;
     }
 
     void Search () {

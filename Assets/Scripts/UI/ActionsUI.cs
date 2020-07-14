@@ -18,7 +18,6 @@ public class ActionsUI : MonoBehaviour {
     public Button snackButton;
     public Button yarnButton;
     public Button sprinklerButton;
-    public Button feedButton;
 
     void Awake () {
         cam = Camera.main;
@@ -67,14 +66,12 @@ public class ActionsUI : MonoBehaviour {
         snackButton.interactable = true;
         yarnButton.interactable = true;
         sprinklerButton.interactable = true;
-        feedButton.interactable = false;
     }
 
     void DisableActions(List<Cat> deadCats) {
         snackButton.interactable = false;
         yarnButton.interactable = false;
         sprinklerButton.interactable = false;
-        feedButton.interactable = true;
     }
 
     void SelectSprinkler() {

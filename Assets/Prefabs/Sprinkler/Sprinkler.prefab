@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1496106899765068188}
   - component: {fileID: 1496106899765068190}
   - component: {fileID: 1496106899765068191}
-  - component: {fileID: 5710838000934050255}
   - component: {fileID: 7004783950692012501}
+  - component: {fileID: 4204519752510264457}
   m_Layer: 1
   m_Name: Sprinkler
   m_TagString: Untagged
@@ -4736,7 +4736,7 @@ ParticleSystemRenderer:
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
-  m_MaxParticleSize: 0.003
+  m_MaxParticleSize: 0.005
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
@@ -4756,19 +4756,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!135 &5710838000934050255
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496106899765068189}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7004783950692012501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4781,4 +4768,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e06faae00f151c479ef895e6bf694ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.75
+  radius: 1.5
+--- !u!114 &4204519752510264457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496106899765068189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24cbfeed925cdb340b8a08afb731411b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnabled: 1
+  secondsToDestroy: 4
