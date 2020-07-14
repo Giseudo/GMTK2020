@@ -37,6 +37,8 @@ public class Cat : MonoBehaviour {
     }
 
     public void Initialize () {
+        GetComponentInChildren<Renderer>().material = Instantiate(GetComponentInChildren<Renderer>().material);
+
         material = GetComponentInChildren<Renderer>().sharedMaterial;
         agent = GetComponent<NavMeshAgent>();
         behaviorSM = new StateMachine();
