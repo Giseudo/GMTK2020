@@ -17,6 +17,7 @@ public class Cat : MonoBehaviour {
     public PlayingState playing;
     public FrighteningState frightening;
     [NonSerialized] public Bowl previousBowl;
+    public Transform head;
     float previousBowlTime;
     public Animator animator;
     Bowl ClosestBowl => BowlManager.GetClosestBowl(this);
@@ -30,7 +31,8 @@ public class Cat : MonoBehaviour {
     public delegate void OnHungerChange(Cat cat);
     public OnHungerChange onHungerChange;
     Material material;
-    float lastTimeScared = 0f;
+    float lastTimeScared, lovedLastTime = 0f;
+    GameObject loveEmotion;
 
     public void Start() {
         agent.updateRotation = false;
@@ -86,6 +88,8 @@ public class Cat : MonoBehaviour {
     void ClearState() {
         if (previousBowlTime + 5f < Time.unscaledTime)
             previousBowl = null;
+        if  (lovedLastTime + 10f < Time.unscaledTime)
+            FallInLove(false);
     }
 
     public void LookForFood () {
@@ -149,6 +153,36 @@ public class Cat : MonoBehaviour {
         lastTimeScared = Time.unscaledTime;
     }
 
+    public void FallInLove (bool active) {
+        if (!active) {
+            if (loveEmotion != null)
+                loveEmotion.SetActive(false);
+
+            loveEmotion = null;
+
+            return;
+        }
+
+        GameObject emotion = EmotionManager.Instance.GetLoveEmotion();
+
+        emotion.GetComponent<FollowTarget>().target = head;
+        emotion.SetActive(true);
+
+        SoundManager.Instance.Play("Hungry");
+
+        loveEmotion = emotion;
+        lovedLastTime = Time.unscaledTime;
+    }
+
+    public void Attention () {
+        GameObject emotion = EmotionManager.Instance.GetAttentionEmotion();
+
+        emotion.GetComponent<FollowTarget>().target = head;
+        emotion.SetActive(true);
+
+        SoundManager.Instance.Play("Playing");
+    }
+
     void Search () {
         if (CurrentState == eatingSnack) return;
         if (CurrentState == playing) return;
@@ -172,13 +206,6 @@ public class Cat : MonoBehaviour {
                         behaviorSM.ChangeState(walking);
 
                     break;
-                case "Snack":
-                    if (Hunger > 50f) {
-                        eatingSnack.snack = hit.transform;
-                        behaviorSM.ChangeState(eatingSnack);
-                        return;
-                    }
-                    break;
             }
         }
 
@@ -193,7 +220,7 @@ public class Cat : MonoBehaviour {
                     behaviorSM.ChangeState(playing);
                     break;
                 case "Snack":
-                    if (Hunger > 100f) {
+                    if (Hunger > 50f && CurrentState != chasing || chasing.target != null && chasing.target.tag == "Bowl") {
                         chasing.target = hit.transform;
                         behaviorSM.ChangeState(chasing);
                     }

@@ -10,13 +10,17 @@ public class EatingSnackState : State {
     public override void Enter(State previousState) {
         base.Enter(previousState);
 
+        cat.agent.isStopped = true;
         startTime = Time.unscaledTime;
         ItemManager.Instance.snack.Drop();
     }
 
     public override void Exit(State nextState) {
         base.Exit(nextState);
+        cat.agent.isStopped = false;
         startTime = 0f;
+
+        cat.FallInLove(false);
     }
 
     public override void LogicUpdate () {

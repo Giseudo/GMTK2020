@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DestroyAfterTime : MonoBehaviour {
+    public bool destroy = true;
     public bool isEnabled;
     public float secondsToDestroy;
 
+    void OnEnable() {
+        if (isEnabled) StartCoroutine("DestroyTimer");
+    }
+
     void Start() {
-        if (isEnabled)
-            StartCoroutine("DestroyTimer");
+        if (isEnabled) StartCoroutine("DestroyTimer");
     }
 
     public void Enable() {
@@ -20,6 +24,9 @@ public class DestroyAfterTime : MonoBehaviour {
     IEnumerator DestroyTimer () {
         yield return new WaitForSeconds(secondsToDestroy);
 
-        Destroy(gameObject);
+        if (destroy)
+            Destroy(gameObject);
+        else
+            gameObject.SetActive(false);
     }
 }

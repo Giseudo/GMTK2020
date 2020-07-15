@@ -11,7 +11,7 @@ public class PlayingState : State {
     public override void Enter(State previousState) {
         base.Enter(previousState);
 
-        EmitNoise();
+        cat.Attention();
         Run();
     }
 
@@ -21,10 +21,6 @@ public class PlayingState : State {
         reachTime = 0f;
         startTime = 0f;
         cat.agent.speed = cat.data.walkSpeed;
-    }
-
-    void EmitNoise() {
-        SoundManager.Instance.Play("Playing");
     }
 
     void Run() {

@@ -1755,8 +1755,83 @@ Transform:
   - {fileID: 1296736545}
   - {fileID: 133562045}
   m_Father: {fileID: 1374969428}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &327828626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 327828627}
+  - component: {fileID: 327828630}
+  - component: {fileID: 327828629}
+  - component: {fileID: 327828628}
+  m_Layer: 0
+  m_Name: Emotions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &327828627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327828626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1374969428}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &327828628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327828626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dfb4a817c2ada84a82537e8bfc72920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1959470040664694204, guid: c98b62a9d5be4e0469b0c2b263d0e1cd, type: 3}
+  poolSize: 10
+--- !u!114 &327828629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327828626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dfb4a817c2ada84a82537e8bfc72920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2468065826507207109, guid: 8e02f8177e6966c4cb788801f5475de7, type: 3}
+  poolSize: 10
+--- !u!114 &327828630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327828626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389ec54bef78fb34792f7c7e163922b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attentionPool: {fileID: 327828629}
+  lovePool: {fileID: 327828628}
 --- !u!1 &359523492
 GameObject:
   m_ObjectHideFlags: 0
@@ -5453,6 +5528,7 @@ Transform:
   - {fileID: 1369638581}
   - {fileID: 2063717195}
   - {fileID: 1722496021}
+  - {fileID: 327828627}
   - {fileID: 324045231}
   - {fileID: 543450652837686317}
   m_Father: {fileID: 0}
@@ -5573,6 +5649,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 4fbb2e7404aec53409adf71553e13441, type: 3}
   - name: WaterSpray
     clip: {fileID: 8300000, guid: 76a326b05458df84fa92be84fcbe3856, type: 3}
+  - name: Playing
+    clip: {fileID: 8300000, guid: db134515a06f3054bbfff8fca84d8c1e, type: 3}
 --- !u!114 &1374969431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9341,7 +9419,7 @@ PrefabInstance:
     - target: {fileID: 8736176534183729276, guid: 5b772593d7833844a9ff45784ea6e662,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8736176534183729276, guid: 5b772593d7833844a9ff45784ea6e662,
         type: 3}

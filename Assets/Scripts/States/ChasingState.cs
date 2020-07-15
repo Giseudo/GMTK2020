@@ -10,15 +10,21 @@ public class ChasingState : State {
     public override void Enter (State previousState) {
         base.Enter(previousState);
 
-        EmitNoise();
-
         cat.animator.SetBool("Walking", true);
+
+        if (target.tag == "Snack")
+            cat.FallInLove(true);
     }
 
     public override void Exit (State nextState) {
         base.Exit(nextState);
 
         cat.animator.SetBool("Walking", false);
+
+        if (target == null || !target.gameObject) return;
+
+        if (target.tag == "Snack" && nextState != cat.eatingSnack)
+            cat.FallInLove(false);
     }
 
     public override void LogicUpdate () {
@@ -33,11 +39,6 @@ public class ChasingState : State {
         ReachTarget();
     }
 
-    void EmitNoise () {
-        if (target.tag == "Snack")
-            SoundManager.Instance.Play("Hungry");
-    }
-
     void Chase () {
         Vector3 position = target.position;
 
@@ -48,6 +49,15 @@ public class ChasingState : State {
 
     void ReachTarget () {
         float distance = (target.position - cat.transform.position).magnitude;
+
+        if (target.tag == "Snack" && distance <= 1f) {
+            if (ItemManager.Instance.snack.dropped) {
+                cat.eatingSnack.snack = target.transform;
+                stateMachine.ChangeState(cat.eatingSnack);
+            }
+
+            return;
+        }
 
         if (distance <= 1f)
             stateMachine.ChangeState(cat.idling);
