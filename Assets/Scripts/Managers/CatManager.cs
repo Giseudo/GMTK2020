@@ -71,12 +71,6 @@ public class CatManager : MonoBehaviour {
         return deadCats;
     }
 
-    public static void FeedTheCats () {
-        foreach (Cat cat in cats) {
-            // cat.LookForFood();
-        }
-    }
-
     public static void Reset () {
         foreach (Cat cat in cats) {
             cat.data.hunger.RuntimeValue = cat.data.hunger.InitialValue;

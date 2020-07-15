@@ -35,22 +35,12 @@ public class Cat : MonoBehaviour {
 
     public void Initialize () {
         GetComponentInChildren<Renderer>().material = Instantiate(GetComponentInChildren<Renderer>().material);
-
         material = GetComponentInChildren<Renderer>().sharedMaterial;
+
         agent = GetComponent<NavMeshAgent>();
-        behaviorSM = new StateMachine();
-
-        /*idling = new IdlingState (this, behaviorSM);
-        walking = new WalkingState (this, behaviorSM);
-        chasing = new ChasingState (this, behaviorSM);
-        eatingMeal = new EatingMealState (this, behaviorSM);
-        eatingSnack = new EatingSnackState (this, behaviorSM);
-        playing = new PlayingState (this, behaviorSM);
-        frightening = new FrighteningState (this, behaviorSM);
-        */
-
         agent.speed  = data.walkSpeed;
 
+        behaviorSM = new StateMachine();
         behaviorSM.Initialize(new IdlingState (this, behaviorSM));
     }
 
@@ -63,7 +53,6 @@ public class Cat : MonoBehaviour {
     }
 
     void LateUpdate() {
-        // Search();
         FaceDirection();
     }
 
