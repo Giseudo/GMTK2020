@@ -5,14 +5,15 @@ using UnityEngine;
 public class EatingMealState : State {
     public Bowl bowl;
 
-    public EatingMealState (Cat cat, StateMachine stateMachine) : base(cat, stateMachine) { }
+    public EatingMealState (Cat cat, StateMachine stateMachine, Bowl bowl = null) : base(cat, stateMachine) {
+        this.bowl = bowl;
+    }
 
     public override void Enter(State previousState) {
         base.Enter(previousState);
 
+        cat.Eat(bowl);
         StayAtBowl();
-        bowl.Feeding(cat);
-        cat.animator.SetBool("Eating", true);
     }
 
     public override void Exit(State nextState) {
@@ -20,7 +21,6 @@ public class EatingMealState : State {
 
         cat.StopEating(bowl);
         bowl.StopFeeding(cat);
-        cat.animator.SetBool("Eating", false);
     }
 
     public override void LogicUpdate () {
@@ -28,24 +28,18 @@ public class EatingMealState : State {
 
         Eat();
         FaceBowl();
+
+        if (cat.scaredAt != Vector3.zero && !cat.IsStarving)
+            stateMachine.ChangeState(new FrighteningState(cat, stateMachine));
     }
 
     void Eat() {
-        // Another cat take it from me?
-        if (bowl.feedingCat != cat) {
-            stateMachine.ChangeState(cat.walking);
+        if (bowl.feedingCat != cat || cat.Hunger <= 0f || bowl.FoodAmount <= 0f) {
+            stateMachine.ChangeState(new WalkingState(cat, stateMachine));
             return;
         }
 
         cat.Eat(bowl);
-
-        if (cat.Hunger <= 0f) {
-            stateMachine.ChangeState(cat.walking);
-            return;
-        }
-
-        if (bowl.FoodAmount <= 0f)
-            cat.LookForFood();
     }
 
     void StayAtBowl() {

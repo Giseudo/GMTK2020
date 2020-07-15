@@ -3,30 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class IdlingState : State {
-    float elapsedTime = 0f;
+    float startTime;
     public IdlingState (Cat cat, StateMachine stateMachine) : base(cat, stateMachine) { }
 
     public override void Enter (State previousState) {
         base.Enter(previousState);
 
-        elapsedTime = 0f;
+        startTime = Time.unscaledTime;
     }
 
     public override void LogicUpdate () {
         base.LogicUpdate();
 
+        Search();
         Idle();
+
+        if (cat.scaredAt != Vector3.zero && !cat.IsStarving)
+            stateMachine.ChangeState(new FrighteningState(cat, stateMachine));
     }
 
     public void Idle () {
-        elapsedTime += Time.deltaTime;
+        if (startTime + 2f < Time.unscaledTime)
+            stateMachine.ChangeState(new WalkingState(cat, stateMachine));
+    }
 
-        if (elapsedTime >= 2f)
-            cat.LookForFood();
+    public void Search() {
+        if (cat.IsHungry) {
+            Bowl bowl = cat.ClosestBowl;
 
-        float distance = (cat.agent.destination - cat.transform.position).magnitude;
+            if (bowl != null)  {
+                stateMachine.ChangeState(new ChasingState(cat, stateMachine, bowl.transform));
+                return;
+            }
+        }
 
-        if (distance > 2f)
-            stateMachine.ChangeState(cat.walking);
+        foreach (var collider in cat.Search(3f)) {
+            if (collider.tag == "YarnBall" && !cat.IsStarving)
+                stateMachine.ChangeState(new PlayingState(cat, stateMachine, collider.transform));
+
+            if (collider.tag == "Snack" && cat.IsHungry)
+                stateMachine.ChangeState(new ChasingState(cat, stateMachine, collider.transform));
+        }
     }
 }

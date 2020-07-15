@@ -43,6 +43,8 @@ public class Bowl : MonoBehaviour {
         // Update data
         data.foodAmount.RuntimeValue = currentAmount;
 
+        feedingCat = cat;
+
         return previousAmount - currentAmount;
     }
 

@@ -6,7 +6,9 @@ public class PlayingState : State {
     public Transform ball;
     public float reachTime = 0f;
     public float startTime = 0f;
-    public PlayingState (Cat cat, StateMachine stateMachine) : base(cat, stateMachine) { }
+    public PlayingState (Cat cat, StateMachine stateMachine, Transform target = null) : base(cat, stateMachine) {
+        ball = target;
+    }
 
     public override void Enter(State previousState) {
         base.Enter(previousState);
@@ -27,15 +29,14 @@ public class PlayingState : State {
         startTime = Time.unscaledTime;
         cat.agent.destination = ball.position;
         cat.agent.speed += 2f;
-
-        cat.animator.SetBool("Walking", true);
+        cat.walking = true;
     }
 
     public override void LogicUpdate () {
         base.LogicUpdate();
 
-        if (ball == null) {
-            stateMachine.ChangeState(cat.idling);
+        if (cat.IsStarving || ball == null) {
+            stateMachine.ChangeState(new IdlingState(cat, stateMachine));
             return;
         }
 
@@ -49,8 +50,19 @@ public class PlayingState : State {
             cat.agent.destination = ball.position;
         }
 
-        if (startTime + 10f < Time.unscaledTime) {
-            stateMachine.ChangeState(cat.idling);
+        if (startTime + 10f < Time.unscaledTime)
+            stateMachine.ChangeState(new IdlingState(cat, stateMachine));
+
+        if (cat.scaredAt != Vector3.zero && !cat.IsStarving)
+            stateMachine.ChangeState(new FrighteningState(cat, stateMachine));
+
+        Search();
+    }
+
+    void Search() {
+        foreach (var collider in cat.Search(3f)) {
+            if (collider.tag == "Snack" && cat.IsHungry)
+                stateMachine.ChangeState(new ChasingState(cat, stateMachine, collider.transform));
         }
     }
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 public class EatingSnackState : State {
     public Transform snack;
     float startTime;
-    public EatingSnackState (Cat cat, StateMachine stateMachine) : base(cat, stateMachine) { }
+    public EatingSnackState (Cat cat, StateMachine stateMachine, Transform snack = null) : base(cat, stateMachine) {
+        this.snack = snack;
+    }
 
     public override void Enter(State previousState) {
         base.Enter(previousState);
@@ -27,6 +29,9 @@ public class EatingSnackState : State {
         base.LogicUpdate();
 
         Eat();
+
+        if (cat.scaredAt != Vector3.zero && !cat.IsStarving)
+            stateMachine.ChangeState(new FrighteningState(cat, stateMachine));
     }
 
     public void Eat() {
@@ -34,7 +39,7 @@ public class EatingSnackState : State {
         if (cat.onHungerChange != null) cat.onHungerChange(cat);
 
         if (cat.Hunger <= 0f || snack == null) {
-            stateMachine.ChangeState(cat.walking);
+            stateMachine.ChangeState(new WalkingState(cat, stateMachine));
             return;
         }
     }

@@ -9,30 +9,25 @@ public class Cat : MonoBehaviour {
     public CatData data;
     [NonSerialized] public NavMeshAgent agent;
     public StateMachine behaviorSM;
-    public IdlingState idling;
-    public WalkingState walking;
-    public ChasingState chasing;
-    public EatingMealState eatingMeal;
-    public EatingSnackState eatingSnack;
-    public PlayingState playing;
-    public FrighteningState frightening;
     [NonSerialized] public Bowl previousBowl;
+    [NonSerialized] public bool walking, eating;
     public Transform head;
-    float previousBowlTime;
     public Animator animator;
-    Bowl ClosestBowl => BowlManager.GetClosestBowl(this);
-    public bool IsThief => data.type == CatType.Thief;
-    public float Hunger => Mathf.Round(data.hunger.RuntimeValue);
-    State CurrentState => behaviorSM.CurrentState;
-
-    void OnEnable() => CatManager.AddCat(this);
-    void OnDisable() => CatManager.RemoveCat(this);
-
     public delegate void OnHungerChange(Cat cat);
     public OnHungerChange onHungerChange;
     Material material;
-    float lastTimeScared, lovedLastTime = 0f;
+    float lastTimeScared, lovedLastTime, previousBowlTime = 0f;
+    public Vector3 scaredAt = Vector3.zero;
     GameObject loveEmotion;
+    State CurrentState => behaviorSM.CurrentState;
+    public Bowl ClosestBowl => BowlManager.GetClosestBowl(this);
+    public bool IsThief => data.type == CatType.Thief;
+    public bool IsStarving => Hunger > 150f;
+    public bool IsHungry => Hunger > 100f;
+    public float Hunger => Mathf.Round(data.hunger.RuntimeValue);
+
+    void OnEnable() => CatManager.AddCat(this);
+    void OnDisable() => CatManager.RemoveCat(this);
 
     public void Start() {
         agent.updateRotation = false;
@@ -45,16 +40,18 @@ public class Cat : MonoBehaviour {
         agent = GetComponent<NavMeshAgent>();
         behaviorSM = new StateMachine();
 
-        idling = new IdlingState (this, behaviorSM);
+        /*idling = new IdlingState (this, behaviorSM);
         walking = new WalkingState (this, behaviorSM);
         chasing = new ChasingState (this, behaviorSM);
         eatingMeal = new EatingMealState (this, behaviorSM);
         eatingSnack = new EatingSnackState (this, behaviorSM);
         playing = new PlayingState (this, behaviorSM);
         frightening = new FrighteningState (this, behaviorSM);
+        */
+
         agent.speed  = data.walkSpeed;
 
-        behaviorSM.Initialize(idling);
+        behaviorSM.Initialize(new IdlingState (this, behaviorSM));
     }
 
     void Update () {
@@ -66,7 +63,7 @@ public class Cat : MonoBehaviour {
     }
 
     void LateUpdate() {
-        Search();
+        // Search();
         FaceDirection();
     }
 
@@ -82,28 +79,18 @@ public class Cat : MonoBehaviour {
         if (!GameManager.Instance.IsPlaying) return;
 
         animator.SetBool("Jumping", agent.isOnOffMeshLink);
+        animator.SetBool("Walking", walking);
+        animator.SetBool("Eating", eating);
+
         IncreaseHunger();
     }
 
     void ClearState() {
         if (previousBowlTime + 5f < Time.unscaledTime)
             previousBowl = null;
-        if  (lovedLastTime + 10f < Time.unscaledTime)
+
+        if  (lovedLastTime + 5f < Time.unscaledTime)
             FallInLove(false);
-    }
-
-    public void LookForFood () {
-        Bowl bowl = ClosestBowl;
-
-        // No meal left? Meh...
-        if (bowl == null || Hunger < 50f) {
-            behaviorSM.ChangeState(walking);
-            return;
-        }
-
-        // Take that bowl!
-        chasing.target = bowl.transform;
-        behaviorSM.ChangeState(chasing);
     }
 
     public bool CanEat (Bowl bowl) {
@@ -119,13 +106,14 @@ public class Cat : MonoBehaviour {
         if (bowl.FoodAmount <= 0f) valid = false;
 
         // Can't eat if I'm running :(
-        if (CurrentState == frightening) valid = false;
+        if (CurrentState.ToString() == "FrighteningState") valid = false;
 
         return valid;
     }
 
     public void Eat (Bowl bowl) {
         float amount = bowl.Feed(this);
+        eating = true;
 
         if (Hunger <= 0f) {
             amount = 0f;
@@ -140,15 +128,14 @@ public class Cat : MonoBehaviour {
     public void StopEating (Bowl bowl) {
         previousBowlTime = Time.unscaledTime;
         previousBowl = bowl;
+        eating = false;
     }
 
     public void Scare (Vector3 position) {
         if (Hunger > 150f) return;
 
-        if (lastTimeScared + .5f < Time.unscaledTime){
-            frightening.scaredAtPosition = position;
-            behaviorSM.ChangeState(frightening);
-        }
+        if (lastTimeScared + .5f < Time.unscaledTime)
+            scaredAt = position;
 
         lastTimeScared = Time.unscaledTime;
     }
@@ -168,7 +155,7 @@ public class Cat : MonoBehaviour {
         emotion.GetComponent<FollowTarget>().target = head;
         emotion.SetActive(true);
 
-        SoundManager.Instance.Play("Hungry");
+        SoundManager.Instance.Play("Hungry", .5f);
 
         loveEmotion = emotion;
         lovedLastTime = Time.unscaledTime;
@@ -180,53 +167,13 @@ public class Cat : MonoBehaviour {
         emotion.GetComponent<FollowTarget>().target = head;
         emotion.SetActive(true);
 
-        SoundManager.Instance.Play("Playing");
+        SoundManager.Instance.Play("Playing", .5f);
     }
 
-    void Search () {
-        if (CurrentState == eatingSnack) return;
-        if (CurrentState == playing) return;
+    public Collider[] Search (float radius) {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
-
-        foreach (var hit in colliders) {
-            switch (hit.tag) {
-                case "Bowl":
-                    if (CurrentState == eatingMeal) return;
-
-                    Bowl bowl = hit.GetComponent<Bowl>();
-
-                    if (CanEat(bowl)) {
-                        eatingMeal.bowl = bowl;
-                        behaviorSM.ChangeState(eatingMeal);
-                        break;
-                    }
-
-                    if (CurrentState == chasing && chasing.target == bowl)
-                        behaviorSM.ChangeState(walking);
-
-                    break;
-            }
-        }
-
-        colliders = Physics.OverlapSphere(transform.position, 3f);
-
-        foreach (var hit in colliders) {
-            switch (hit.tag) {
-                case "YarnBall":
-                    if (Hunger > 100) break;
-
-                    playing.ball = hit.transform;
-                    behaviorSM.ChangeState(playing);
-                    break;
-                case "Snack":
-                    if (Hunger > 50f && CurrentState != chasing || chasing.target != null && chasing.target.tag == "Bowl") {
-                        chasing.target = hit.transform;
-                        behaviorSM.ChangeState(chasing);
-                    }
-                    break;
-            }
-        }
+        return colliders;
     }
 
     void FaceDirection() {
@@ -239,7 +186,9 @@ public class Cat : MonoBehaviour {
     }
 
     void IncreaseHunger() {
-        if (CurrentState != eatingMeal && CurrentState != eatingSnack && Hunger < data.hunger.InitialValue * 2) {
+        string[] eatingStates = {"EatingMealState", "EatingSnackState"};
+
+        if (Array.IndexOf(eatingStates, CurrentState.ToString()) == -1 && Hunger < data.hunger.InitialValue * 2) {
             data.hunger.RuntimeValue += data.hungerSpeed * Time.deltaTime;
 
             if (onHungerChange != null) onHungerChange(this);

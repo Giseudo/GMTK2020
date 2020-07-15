@@ -73,7 +73,7 @@ public class CatManager : MonoBehaviour {
 
     public static void FeedTheCats () {
         foreach (Cat cat in cats) {
-            cat.LookForFood();
+            // cat.LookForFood();
         }
     }
 
