@@ -105,7 +105,7 @@ public class BowlManager : MonoBehaviour {
         return closest;
     }
 
-    /*#if UNITY_EDITOR
+    #if UNITY_EDITOR
     void OnDrawGizmos() {
         foreach (Bowl bowl in bowls) {
             Vector3 managerPos = transform.position;
@@ -118,12 +118,11 @@ public class BowlManager : MonoBehaviour {
                 bowlPos,
                 managerPos - offset,
                 bowlPos + offset,
-                Color.white,
+                Color.green,
                 EditorGUIUtility.whiteTexture,
                 1f
             );
         }
     }
     #endif
-    */
 }

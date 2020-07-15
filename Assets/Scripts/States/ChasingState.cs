@@ -81,7 +81,7 @@ public class ChasingState : State {
             if (collider.tag == "YarnBall" && !cat.IsStarving)
                 stateMachine.ChangeState(new PlayingState(cat, stateMachine, collider.transform));
 
-            if (collider.tag == "Snack" && cat.IsHungry)
+            if (collider.tag == "Snack" && cat.IsHungry && target.tag != "Snack")
                 stateMachine.ChangeState(new ChasingState(cat, stateMachine, collider.transform));
         }
     }

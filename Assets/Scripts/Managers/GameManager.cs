@@ -46,8 +46,6 @@ public class GameManager : MonoBehaviour {
 
         playing = true;
         started = true;
-
-        CatManager.FeedTheCats();
     }
 
     public void EndRound() {

@@ -46,12 +46,10 @@ public class CatManager : MonoBehaviour {
 
         cat.data.hunger.RuntimeValue = cat.data.hunger.InitialValue;
 
-        Material material = cat.GetComponentInChildren<Renderer>().sharedMaterial;
-        material.SetFloat("_Hunger", Mathf.InverseLerp(0f, cat.data.hunger.InitialValue * 2, cat.data.hunger.InitialValue));
-
         if (onAddCat != null) onAddCat(cat);
 
-        cat.Initialize();
+        if (!Application.IsPlaying(cat)) return;
+            cat.Initialize();
     }
 
     public static void RemoveCat (Cat cat) {
@@ -93,11 +91,13 @@ public class CatManager : MonoBehaviour {
         return navmeshHit.position;
     }
 
-    /*#if UNITY_EDITOR
+    #if UNITY_EDITOR
     void OnDrawGizmos() {
         foreach (Cat cat in cats) {
-            Vector3 managerPos = transform.position;
+            if (cat == null) continue;
+
             Vector3 catPos = cat.transform.position;
+            Vector3 managerPos = transform.position;
             float halfHeight = (managerPos.y - catPos.y) * .5f;
             Vector3 offset = Vector3.up * halfHeight;
 
@@ -106,12 +106,11 @@ public class CatManager : MonoBehaviour {
                 catPos,
                 managerPos - offset,
                 catPos + offset,
-                Color.white,
+                Color.cyan,
                 EditorGUIUtility.whiteTexture,
                 1f
             );
         }
     }
     #endif
-    */
 }

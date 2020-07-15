@@ -30,18 +30,18 @@ public class Cat : MonoBehaviour {
     void OnDisable() => CatManager.RemoveCat(this);
 
     public void Start() {
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed  = data.walkSpeed;
         agent.updateRotation = false;
+
+        behaviorSM = new StateMachine();
+        behaviorSM.Initialize(new IdlingState (this, behaviorSM));
     }
 
     public void Initialize () {
         GetComponentInChildren<Renderer>().material = Instantiate(GetComponentInChildren<Renderer>().material);
         material = GetComponentInChildren<Renderer>().sharedMaterial;
-
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed  = data.walkSpeed;
-
-        behaviorSM = new StateMachine();
-        behaviorSM.Initialize(new IdlingState (this, behaviorSM));
+        material.SetFloat("_Hunger", Mathf.InverseLerp(0f, data.hunger.InitialValue * 2, data.hunger.InitialValue));
     }
 
     void Update () {
@@ -53,6 +53,8 @@ public class Cat : MonoBehaviour {
     }
 
     void LateUpdate() {
+        if (!Application.IsPlaying(gameObject)) return;
+
         FaceDirection();
     }
 
