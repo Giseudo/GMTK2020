@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour {
     [Serializable]
-    public struct SoundClip {
+    public class SoundClip {
         public string name;
         public AudioClip clip;
+        [NonSerialized] public float lastPlayedTime;
     }
     public List<SoundClip> soundClips;
 
@@ -22,13 +23,18 @@ public class SoundManager : MonoBehaviour {
 	}
 
     public void Play (string name, float volume = 1f) {
-        AudioClip audioClip = soundClips.Find(clip => clip.name == name).clip;
+        SoundClip sound = soundClips.Find(clip => clip.name == name);
 
-        if (audioClip == null) {
+        if (sound == null) {
             Debug.LogWarning(string.Format("Could not found clip with name \"{0}\"", name));
             return;
         }
 
-        GetComponent<AudioSource>().PlayOneShot(audioClip, volume);
+        if (sound.lastPlayedTime + 2f > Time.unscaledTime)
+            return;
+
+        sound.lastPlayedTime = Time.unscaledTime;
+
+        GetComponent<AudioSource>().PlayOneShot(sound.clip, volume);
     }
 }

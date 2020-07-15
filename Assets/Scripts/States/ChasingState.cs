@@ -10,6 +10,8 @@ public class ChasingState : State {
     public override void Enter (State previousState) {
         base.Enter(previousState);
 
+        EmitNoise();
+
         cat.animator.SetBool("Walking", true);
     }
 
@@ -22,8 +24,18 @@ public class ChasingState : State {
     public override void LogicUpdate () {
         base.LogicUpdate();
 
+        if (target == null || !target.gameObject) {
+            stateMachine.ChangeState(cat.idling);
+            return;
+        }
+
         Chase();
         ReachTarget();
+    }
+
+    void EmitNoise () {
+        if (target.tag == "Snack")
+            SoundManager.Instance.Play("Hungry");
     }
 
     void Chase () {

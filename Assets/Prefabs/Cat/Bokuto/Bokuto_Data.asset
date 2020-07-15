@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Bokuto_Data
   m_EditorClassIdentifier: 
   nick: Bokuto
-  state: IdlingState
+  state: EatingSnackState
   type: 0
-  walkSpeed: 2
+  walkSpeed: 3
   eatSpeed: 20
-  hungerSpeed: 2
+  hungerSpeed: 4
   hunger: {fileID: 11400000, guid: d6c2aeb77f519a747a588d9050ead201, type: 2}

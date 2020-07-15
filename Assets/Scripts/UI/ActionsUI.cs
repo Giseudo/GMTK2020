@@ -95,12 +95,7 @@ public class ActionsUI : MonoBehaviour {
         snacksCursor.position = mousePos;
         ItemManager.Instance.snack.Move(hitPoint);
 
-        if (ItemManager.Instance.snack.dropped) {
-            snacksCursor.gameObject.SetActive(false);
-            selectedAction = null;
-        }
-
-        if (Input.GetMouseButtonDown(0) && hitPoint.magnitude > 0f) {
+        if (Input.GetMouseButtonDown(0) && hitPoint.magnitude > 0f || ItemManager.Instance.snack.dropped) {
             snacksCursor.gameObject.SetActive(false);
             ItemManager.Instance.snack.Use();
             selectedAction = null;

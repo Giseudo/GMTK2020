@@ -22,11 +22,6 @@ public class EatingSnackState : State {
     public override void LogicUpdate () {
         base.LogicUpdate();
 
-        if (cat.Hunger <= 0f || snack == null) {
-            stateMachine.ChangeState(cat.walking);
-            return;
-        }
-
         Eat();
     }
 
@@ -34,8 +29,9 @@ public class EatingSnackState : State {
         cat.data.hunger.RuntimeValue -= Time.deltaTime * cat.data.eatSpeed;
         if (cat.onHungerChange != null) cat.onHungerChange(cat);
 
-        if (startTime > 0f && startTime + 3f < Time.unscaledTime) {
+        if (cat.Hunger <= 0f || snack == null) {
             stateMachine.ChangeState(cat.walking);
+            return;
         }
     }
 }

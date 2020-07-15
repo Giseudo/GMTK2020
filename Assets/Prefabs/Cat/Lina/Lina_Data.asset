@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Lina_Data
   m_EditorClassIdentifier: 
   nick: Lina
-  state: IdlingState
+  state: ChasingState
   type: 0
   walkSpeed: 2
   eatSpeed: 20
-  hungerSpeed: 2
+  hungerSpeed: 4
   hunger: {fileID: 11400000, guid: 6af0e641f20787b43aa1977f127dfca1, type: 2}

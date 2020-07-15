@@ -16,6 +16,6 @@ MonoBehaviour:
   state: WalkingState
   type: 1
   walkSpeed: 5
-  eatSpeed: 40
+  eatSpeed: 30
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 8c3d04877a242ef43aeacc1f2598e7b5, type: 2}

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Dex_Data
   m_EditorClassIdentifier: 
   nick: Dex
-  state: WalkingState
+  state: PlayingState
   type: 0
   walkSpeed: 2
   eatSpeed: 10
-  hungerSpeed: 2
+  hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 9c06825f8a7f16343a14f972943d15e5, type: 2}

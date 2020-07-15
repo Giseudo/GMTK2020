@@ -11,11 +11,8 @@ public class PlayingState : State {
     public override void Enter(State previousState) {
         base.Enter(previousState);
 
-        startTime = Time.unscaledTime;
-        cat.agent.destination = ball.position;
-        cat.agent.speed += 2f;
-
-        cat.animator.SetBool("Walking", true);
+        EmitNoise();
+        Run();
     }
 
     public override void Exit(State nextState) {
@@ -24,6 +21,18 @@ public class PlayingState : State {
         reachTime = 0f;
         startTime = 0f;
         cat.agent.speed = cat.data.walkSpeed;
+    }
+
+    void EmitNoise() {
+        SoundManager.Instance.Play("Playing");
+    }
+
+    void Run() {
+        startTime = Time.unscaledTime;
+        cat.agent.destination = ball.position;
+        cat.agent.speed += 2f;
+
+        cat.animator.SetBool("Walking", true);
     }
 
     public override void LogicUpdate () {

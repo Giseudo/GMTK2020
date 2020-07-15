@@ -7,7 +7,7 @@ public class Sprinkler : MonoBehaviour
     public float radius = 1.5f;
 
     void Start() {
-        
+        SoundManager.Instance.Play("WaterSpray");
     }
 
     void LateUpdate() {

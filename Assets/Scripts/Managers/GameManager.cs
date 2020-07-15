@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour {
     public delegate void OnRoundEnd(List<Cat> deadCats);
     public OnRoundStart onRoundStart;
     public OnRoundEnd onRoundEnd;
-    public int catsPerRound = 2;
+    public int catsPerRound = 3;
+    public int bowlsPerRound = 2;
 
 
 	void Awake() {
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void SpawnCats() {
-        BowlManager.EnableBowl(catsPerRound);
+        BowlManager.EnableBowl(bowlsPerRound);
         CatManager.EnableCat(catsPerRound);
     }
 }

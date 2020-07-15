@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Emy
   state: IdlingState
   type: 0
-  walkSpeed: 2
+  walkSpeed: 3
   eatSpeed: 10
-  hungerSpeed: 2
+  hungerSpeed: 3
   hunger: {fileID: 11400000, guid: 1b4784337e235844eb1aa3052f58bd37, type: 2}
