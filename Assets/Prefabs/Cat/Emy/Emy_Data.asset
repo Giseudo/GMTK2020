@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Emy_Data
   m_EditorClassIdentifier: 
   nick: Emy
-  state: IdlingState
+  state: EatingSnackState
   type: 0
-  walkSpeed: 3
-  eatSpeed: 10
-  hungerSpeed: 3
+  walkSpeed: 4
+  eatSpeed: 40
+  hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 1b4784337e235844eb1aa3052f58bd37, type: 2}

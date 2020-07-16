@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Mel_Data
   m_EditorClassIdentifier: 
   nick: Mel
-  state: ChasingState
+  state: IdlingState
   type: 0
-  walkSpeed: 2
-  eatSpeed: 20
-  hungerSpeed: 3
+  walkSpeed: 4
+  eatSpeed: 40
+  hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 2022bcd5713e7e74a879266d0ccf9bea, type: 2}

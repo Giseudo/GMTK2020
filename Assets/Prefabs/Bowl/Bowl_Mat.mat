@@ -75,7 +75,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _EmptyColor: {r: 0.1920219, g: 0.333, b: 0.07048904, a: 0}
+    - _EmptyColor: {r: 0.99300003, g: 0.21028234, b: 0.21028234, a: 0}
     - _FullColor: {r: 0.10163202, g: 0.794, b: 0.14524573, a: 0}
     - _MealColor: {r: 0.794, g: 0.47726777, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

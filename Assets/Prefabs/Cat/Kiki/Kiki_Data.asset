@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Kiki_Data
   m_EditorClassIdentifier: 
   nick: Kiki
-  state: WalkingState
+  state: IdlingState
   type: 1
-  walkSpeed: 5
-  eatSpeed: 30
-  hungerSpeed: 5
+  walkSpeed: 4
+  eatSpeed: 40
+  hungerSpeed: 10
   hunger: {fileID: 11400000, guid: 8c3d04877a242ef43aeacc1f2598e7b5, type: 2}

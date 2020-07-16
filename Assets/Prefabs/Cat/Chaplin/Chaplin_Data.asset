@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Chaplin_Data
   m_EditorClassIdentifier: 
   nick: Chaplin
-  state: WalkingState
+  state: IdlingState
   type: 0
   walkSpeed: 4
-  eatSpeed: 20
-  hungerSpeed: 3
+  eatSpeed: 40
+  hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 0369a239d920ddf4ca93200ca68c50e0, type: 2}

@@ -17,5 +17,5 @@ MonoBehaviour:
   type: 1
   walkSpeed: 4
   eatSpeed: 40
-  hungerSpeed: 5
+  hungerSpeed: 10
   hunger: {fileID: 11400000, guid: 3259aac8264983541967bd03898eb4ba, type: 2}

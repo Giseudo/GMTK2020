@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Jack_Data
   m_EditorClassIdentifier: 
   nick: Jack
-  state: ChasingState
+  state: EatingSnackState
   type: 1
   walkSpeed: 4
-  eatSpeed: 20
-  hungerSpeed: 6
+  eatSpeed: 40
+  hungerSpeed: 10
   hunger: {fileID: 11400000, guid: 9c979dcda5f73fa4dbb3365d4018c7f6, type: 2}

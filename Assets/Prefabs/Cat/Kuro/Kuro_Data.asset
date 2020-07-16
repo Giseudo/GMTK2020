@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Kuro_Data
   m_EditorClassIdentifier: 
   nick: Kuro
-  state: EatingMealState
+  state: EatingSnackState
   type: 0
-  walkSpeed: 2
-  eatSpeed: 20
-  hungerSpeed: 2
+  walkSpeed: 4
+  eatSpeed: 40
+  hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 17f84f6e5688f9b419f976abc18aa035, type: 2}

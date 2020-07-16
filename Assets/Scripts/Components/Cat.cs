@@ -22,8 +22,8 @@ public class Cat : MonoBehaviour {
     State CurrentState => behaviorSM.CurrentState;
     public Bowl ClosestBowl => BowlManager.GetClosestBowl(this);
     public bool IsThief => data.type == CatType.Thief;
-    public bool IsStarving => Hunger > 150f;
-    public bool IsHungry => Hunger > 100f;
+    public bool IsStarving => Hunger > 100f;
+    public bool IsHungry => Hunger > 50f;
     public float Hunger => Mathf.Round(data.hunger.RuntimeValue);
 
     void OnEnable() => CatManager.AddCat(this);

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: VicData
   m_EditorClassIdentifier: 
   nick: Vic
-  state: IdlingState
+  state: EatingSnackState
   type: 0
-  walkSpeed: 3
-  eatSpeed: 7
-  hungerSpeed: 2
+  walkSpeed: 4
+  eatSpeed: 40
+  hungerSpeed: 10
   hunger: {fileID: 11400000, guid: 3227d3c94f3cdbd44a85e86b714801a6, type: 2}

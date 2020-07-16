@@ -46,12 +46,19 @@ public class GameManager : MonoBehaviour {
 
         playing = true;
         started = true;
+
+        SoundManager.Instance.Play("Start", .5f);
     }
 
     public void EndRound() {
         List<Cat> deadCats = CatManager.GetDeadCats();
 
         if (onRoundEnd != null) onRoundEnd(deadCats);
+
+        if (deadCats.Count > 0)
+            SoundManager.Instance.Play("Lose");
+        else
+            SoundManager.Instance.Play("Win", .5f);
 
         playing = false;
     }

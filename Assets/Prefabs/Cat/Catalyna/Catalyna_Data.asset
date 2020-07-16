@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Catalyna
   state: IdlingState
   type: 0
-  walkSpeed: 3
-  eatSpeed: 20
-  hungerSpeed: 3
+  walkSpeed: 4
+  eatSpeed: 40
+  hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 8846cb4b3cd0e1740b826faf732f5a56, type: 2}

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d224425330316714f911883f3291f4a1, type: 3}
   m_Name: BowlFood
   m_EditorClassIdentifier: 
-  InitialValue: 100
+  InitialValue: 150

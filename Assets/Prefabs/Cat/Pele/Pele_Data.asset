@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Pele_Data
   m_EditorClassIdentifier: 
   nick: Pele
-  state: EatingMealState
+  state: IdlingState
   type: 0
   walkSpeed: 4
-  eatSpeed: 20
-  hungerSpeed: 3
+  eatSpeed: 40
+  hungerSpeed: 5
   hunger: {fileID: 11400000, guid: b11bfd801acbd1b4cb31d02d8284926c, type: 2}

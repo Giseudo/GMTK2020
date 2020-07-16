@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Gary_Data
   m_EditorClassIdentifier: 
   nick: Gary
-  state: WalkingState
+  state: IdlingState
   type: 0
-  walkSpeed: 2
-  eatSpeed: 20
-  hungerSpeed: 3
+  walkSpeed: 4
+  eatSpeed: 40
+  hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 682cdb39783c8ef42ac1e15c2a561648, type: 2}

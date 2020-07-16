@@ -80,7 +80,7 @@ public class ActionsUI : MonoBehaviour {
         sprinklerCursor.gameObject.SetActive(true);
         sprinklerCursor.position = mousePos;
 
-        if (Input.GetMouseButtonDown(0) && hitPoint.magnitude > 0f) {
+        if (Input.GetMouseButtonUp(0) && hitPoint.magnitude > 0f) {
             sprinklerCursor.gameObject.SetActive(false);
             ItemManager.Instance.sprinkler.Use(hitPoint);
 
@@ -95,7 +95,7 @@ public class ActionsUI : MonoBehaviour {
         snacksCursor.position = mousePos;
         ItemManager.Instance.snack.Move(hitPoint);
 
-        if (Input.GetMouseButtonDown(0) && hitPoint.magnitude > 0f || ItemManager.Instance.snack.dropped) {
+        if (Input.GetMouseButtonUp(0) && hitPoint.magnitude > 0f || ItemManager.Instance.snack.dropped) {
             snacksCursor.gameObject.SetActive(false);
             ItemManager.Instance.snack.Use();
             selectedAction = null;
@@ -108,9 +108,11 @@ public class ActionsUI : MonoBehaviour {
         yarnBallCursor.gameObject.SetActive(true);
         yarnBallCursor.position = mousePos;
 
-        if (Input.GetMouseButtonDown(0) && hitPoint.magnitude > 0f) {
+        if (Input.GetMouseButtonUp(0) && hitPoint.magnitude > 0f) {
+            Vector3 origin = cam.transform.position + (hitPoint - cam.transform.position).normalized * 4f;
+
             yarnBallCursor.gameObject.SetActive(false);
-            ItemManager.Instance.yarnBall.Use(mousePos, hitPoint);
+            ItemManager.Instance.yarnBall.Use(origin, hitPoint);
             selectedAction = null;
         }
     }
@@ -123,7 +125,8 @@ public class ActionsUI : MonoBehaviour {
             Input.mousePosition, parentCanvas.worldCamera,
             out movePos);
 
-        mousePos = parentCanvas.transform.TransformPoint(movePos);
+        // mousePos = parentCanvas.transform.TransformPoint(movePos);
+        mousePos = Input.mousePosition;
     }
 
     void RaycastWorld() {
