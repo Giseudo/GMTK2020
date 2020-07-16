@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Mima
   state: IdlingState
   type: 1
-  walkSpeed: 5
+  walkSpeed: 4
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 2502690993871f44dbf52cb1401cd2bc, type: 2}

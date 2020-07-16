@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Ozzy_Data
   m_EditorClassIdentifier: 
   nick: Ozzy
-  state: IdlingState
+  state: ChasingState
   type: 0
-  walkSpeed: 5
+  walkSpeed: 4
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 168d1d65f2817244e9ac2a976f28b47a, type: 2}

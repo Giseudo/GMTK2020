@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Pele
   state: IdlingState
   type: 0
-  walkSpeed: 4
+  walkSpeed: 3
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: b11bfd801acbd1b4cb31d02d8284926c, type: 2}

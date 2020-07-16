@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Bokuto
   state: IdlingState
   type: 0
-  walkSpeed: 3
+  walkSpeed: 2
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: d6c2aeb77f519a747a588d9050ead201, type: 2}

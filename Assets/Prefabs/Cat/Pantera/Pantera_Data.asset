@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Pantera
   state: IdlingState
   type: 0
-  walkSpeed: 3
+  walkSpeed: 2
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 46178d7402052e34bab08cda25319bab, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Felyx
   state: EatingSnackState
   type: 0
-  walkSpeed: 4
+  walkSpeed: 3
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: e3f13be8a5e26fa40a061a215df572db, type: 2}

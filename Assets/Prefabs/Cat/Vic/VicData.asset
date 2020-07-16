@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Vic
   state: EatingSnackState
   type: 0
-  walkSpeed: 4
+  walkSpeed: 3
   eatSpeed: 40
   hungerSpeed: 10
   hunger: {fileID: 11400000, guid: 3227d3c94f3cdbd44a85e86b714801a6, type: 2}

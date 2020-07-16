@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Mingau
   state: IdlingState
   type: 0
-  walkSpeed: 3
+  walkSpeed: 2
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 3a6bcb3823a4e2c41b07e17eb9c007d7, type: 2}

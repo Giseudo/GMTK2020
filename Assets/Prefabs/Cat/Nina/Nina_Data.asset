@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Nina
   state: IdlingState
   type: 1
-  walkSpeed: 4
+  walkSpeed: 3
   eatSpeed: 40
   hungerSpeed: 10
   hunger: {fileID: 11400000, guid: cd1b5d5f4dc8f2e44aef8ec7e556b761, type: 2}

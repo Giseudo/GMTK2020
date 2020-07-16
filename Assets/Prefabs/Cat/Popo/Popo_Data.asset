@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Popo
   state: EatingSnackState
   type: 0
-  walkSpeed: 5
+  walkSpeed: 4
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: b0acb033a65fd0a4ebc11807fd1b7884, type: 2}

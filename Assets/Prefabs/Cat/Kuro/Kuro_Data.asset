@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Kuro
   state: EatingSnackState
   type: 0
-  walkSpeed: 4
+  walkSpeed: 3
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 17f84f6e5688f9b419f976abc18aa035, type: 2}

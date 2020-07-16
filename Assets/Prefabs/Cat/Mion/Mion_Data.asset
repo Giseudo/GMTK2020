@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Mion
   state: IdlingState
   type: 0
-  walkSpeed: 4
+  walkSpeed: 3
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 5d29ce8e21b76b14da5178b371234432, type: 2}

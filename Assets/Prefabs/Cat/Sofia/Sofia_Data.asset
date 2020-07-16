@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Sofia
   state: IdlingState
   type: 1
-  walkSpeed: 3
+  walkSpeed: 2
   eatSpeed: 40
   hungerSpeed: 10
   hunger: {fileID: 11400000, guid: 7829ba971c2672d428c5bebff756c018, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Gary
   state: IdlingState
   type: 0
-  walkSpeed: 4
+  walkSpeed: 2
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 682cdb39783c8ef42ac1e15c2a561648, type: 2}

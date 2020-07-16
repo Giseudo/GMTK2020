@@ -15,7 +15,7 @@ MonoBehaviour:
   nick: Mel
   state: IdlingState
   type: 0
-  walkSpeed: 4
+  walkSpeed: 3
   eatSpeed: 40
   hungerSpeed: 5
   hunger: {fileID: 11400000, guid: 2022bcd5713e7e74a879266d0ccf9bea, type: 2}
