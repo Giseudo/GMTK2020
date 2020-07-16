@@ -4,18 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
-    int round = 1;
     public bool IsPlaying => playing;
     public bool IsStarted => started;
     bool playing = false;
     bool started = false;
 	public static GameManager Instance = null;
-    public delegate void OnRoundStart();
+    public delegate void OnRoundStart(int round);
     public delegate void OnRoundEnd(List<Cat> deadCats);
     public OnRoundStart onRoundStart;
     public OnRoundEnd onRoundEnd;
     public int catsPerRound = 3;
     public int bowlsPerRound = 2;
+    int round = 0;
 
 
 	void Awake() {
@@ -42,7 +42,9 @@ public class GameManager : MonoBehaviour {
     public void StartRound() {
         if (playing) return;
 
-        if (onRoundStart != null) onRoundStart();
+        round++;
+
+        if (onRoundStart != null) onRoundStart(round);
 
         playing = true;
         started = true;

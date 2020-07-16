@@ -62,7 +62,7 @@ public class ActionsUI : MonoBehaviour {
         UpdateItemsAmount();
     }
 
-    void EnableActions() {
+    void EnableActions(int round) {
         snackButton.interactable = true;
         yarnButton.interactable = true;
         sprinklerButton.interactable = true;

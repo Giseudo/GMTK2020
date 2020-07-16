@@ -60,7 +60,7 @@ public class BowlManager : MonoBehaviour {
         bowls.Remove(bowl);
     }
 
-    public static void PlaceFood () {
+    public static void PlaceFood (int round) {
         foreach (Bowl bowl in bowls) {
             bowl.PlaceFood();
         }
